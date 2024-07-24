@@ -22,6 +22,7 @@ public class BackendManager : MonoBehaviour {
     //뒤끝 콘솔에 업로드한 차트 데이터만 모아놓은 클래스
     public class BackendChart {
         public readonly BackendData.Chart.AllChart ChartInfo = new(); // 모든 차트
+        public readonly BackendData.Chart.Enemy.Manager Enemy = new(); //적 차트
         /*public readonly BackendData.Chart.Weapon.Manager Weapon = new(); // Weapon 차트
         public readonly BackendData.Chart.Enemy.Manager Enemy = new(); // enemyChart 차트
         public readonly BackendData.Chart.Stage.Manager Stage = new(); // Stage 차트
