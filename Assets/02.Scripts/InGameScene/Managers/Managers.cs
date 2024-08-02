@@ -22,6 +22,7 @@ namespace InGameScene
         [SerializeField] private InGameUI_Enemy _enemyUI;
         [SerializeField] private InGameUI_Stage _stageUI;
         [SerializeField] private InGameUI_LeftUI _leftUI;
+        [SerializeField] private InGameUI_ItemInventory _itemUI;
 
         public static readonly ItemManager Item = new();
         public static readonly ProcessManager Process = new();
@@ -31,7 +32,7 @@ namespace InGameScene
         public static BuffManager Buff;
 
         private Player _player;
-        private CloudManager _cloudManager;
+        //private CloudManager _cloudManager;
         private GameObject _bulletPrefab;
 
         private void Awake()
@@ -48,17 +49,17 @@ namespace InGameScene
         {
             try
             {
-                _cloudManager = FindObjectOfType<CloudManager>();
+                //_cloudManager = FindObjectOfType<CloudManager>();
                 _player = FindObjectOfType<Player>();
 
                 _bulletPrefab = Resources.Load<GameObject>("Prefabs/InGameScene/BulletObject");
 
-                _cloudManager.Init();
+                //_cloudManager.Init();
                 _player.Init(_bulletPrefab);
 
                 Item.Init(_bulletPrefab);
 
-                _uiManager.Init(_userUI, _leftUI, _enemyUI, _stageUI);
+                _uiManager.Init(_userUI, _leftUI, _enemyUI, _stageUI, _itemUI);
                 Game.Init(_player, _uiManager);
 
                 Process.Init(_player, _uiManager);

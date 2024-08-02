@@ -116,7 +116,7 @@ namespace InGameScene
                 weaponPos.ReleaseGun();
             }
 
-            // 장착된 무기로 다시 무기 등록
+/*            // 장착된 무기로 다시 무기 등록
             foreach (var weaponEquip in StaticManager.Backend.GameData.WeaponEquip.Dictionary)
             {
                 string myWeaponId = weaponEquip.Key;
@@ -132,7 +132,7 @@ namespace InGameScene
                 {
                     throw new Exception($"인벤토리에 존재하지 않습니다.\n {myWeaponId}");
                 }
-            }
+            }*/
         }
     }
 }

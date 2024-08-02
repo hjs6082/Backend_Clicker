@@ -37,8 +37,8 @@ public class BackendManager : MonoBehaviour {
         public readonly BackendData.GameData.WeaponInventory.Manager WeaponInventory = new(); // WeaponInventory 테이블 데이터
         public readonly BackendData.GameData.UserData UserData = new(); // UserData 테이블 데이터
         public readonly BackendData.GameData.QuestAchievement.Manager QuestAchievement = new(); // QuestAchievement 테이블 데이터
-        /*public readonly BackendData.GameData.WeaponEquip.Manager WeaponEquip = new(); // WeaponEquip 테이블 데이터
-        public readonly BackendData.GameData.ItemInventory ItemInventory = new(); // ItemInventory 테이블 데이터*/
+        public readonly BackendData.GameData.ItemInventory ItemInventory = new(); // ItemInventory 테이블 데이터
+        /*public readonly BackendData.GameData.WeaponEquip.Manager WeaponEquip = new(); // WeaponEquip 테이블 데이터*/
 
         public readonly Dictionary<string, BackendData.Base.GameData>
             GameDataList = new Dictionary<string, GameData>();
@@ -54,8 +54,8 @@ public class BackendManager : MonoBehaviour {
 
     public BackendChart   Chart = new(); // 차트 모음 클래스 생성
     public BackendGameData GameData = new(); // 게임 모음 클래스 생성
-/*    public BackendData.Rank.Manager Rank = new(); // 랭킹 관리 클래스 생성
-    public BackendData.Post.Manager Post = new(); // 우편 클래스 생성*/
+    public BackendData.Rank.Manager Rank = new(); // 랭킹 관리 클래스 생성
+    public BackendData.Post.Manager Post = new(); // 우편 클래스 생성
 
  // 게임 데이터의 저장, 조회등 일괄적으로 처리하기 위한 List
 
