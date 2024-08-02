@@ -153,7 +153,7 @@ namespace InGameScene
                 case EnemyObject.EnemyState.Dead:
                     Managers.Game.UpdateUserData(enemyItem.Money, enemyItem.Exp);
                     StaticManager.Backend.GameData.UserData.CountDefeatEnemy();
-                    _uiManager.BottomUI.GetUI<InGameUI_Quest>().UpdateUI(BackendData.Chart.Quest.QuestType.DefeatEnemy);
+                    _uiManager.LeftUI.GetUI<InGameUI_Quest>().UpdateUI(BackendData.Chart.Quest.QuestType.DefeatEnemy);
                     _player.SetNewEnemy(null);
                     RespawnNextEnemy();
                     _uiManager.EnemyUI.ShowUI(false);

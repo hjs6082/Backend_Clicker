@@ -210,7 +210,7 @@ namespace InGameScene.UI
 
                             break;
                         case RewardItemType.Weapon: // 무기일 경우, 무기의 id를 가져와 업데이트
-                            InGameScene.Managers.Game.UpdateWeaponInventory(item.Id);
+                            //InGameScene.Managers.Game.UpdateWeaponInventory(item.Id);
                             break;
                     }
                 }
