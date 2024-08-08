@@ -14,7 +14,7 @@ namespace InGameScene.UI
         private InGameUI_LeftUIBase[] _bottomUIs;
         private Button[] _leftUIButtons;
 
-        [SerializeField] private GameObject bottomUIPanel; //전체 화면을 가리는 백그라운드 UI 
+        [SerializeField] private GameObject _bottomUIPanel; //전체 화면을 가리는 백그라운드 UI 
         [SerializeField] private GameObject _UIChangeButtonParentObject;
 
         //===========================================================
@@ -65,8 +65,11 @@ namespace InGameScene.UI
         {
             try
             {
-                if (!bottomUIPanel.activeSelf)
-                    bottomUIPanel.SetActive(true);
+                if (!_bottomUIPanel.activeSelf)
+                {
+                    _bottomUIPanel.SetActive(true);
+                    _UIChangeButtonParentObject.transform.SetParent(_bottomUIPanel.transform);
+                }
 
                 for (int i = 0; i < _leftUIButtons.Length; i++)
                 {
@@ -98,6 +101,11 @@ namespace InGameScene.UI
                 throw new Exception(
                     $"활성되지 않은 Bottom UI가 존재합니다.\n시도된 UI : {index}번\n전체 Bottom UI 개수 : {_bottomUIs.Length}\n\n{e}");
             }
+        }
+        public void CloseUI()
+        {
+            _bottomUIPanel.SetActive(false);
+            _UIChangeButtonParentObject.transform.SetParent(this.gameObject.transform);
         }
     }
 }

@@ -14,6 +14,7 @@ namespace BackendData.Chart.Weapon
         {
             WeaponID = int.Parse(json["WeaponID"].ToString());
             WeaponName = json["WeaponName"].ToString();
+            WeaponExplain = json["WeaponExplain"].ToString();
             Atk = float.Parse(json["Atk"].ToString());
             GrowingAtk = float.Parse(json["GrowingAtk"].ToString());
             Delay = float.Parse(json["Delay"].ToString());
@@ -30,6 +31,7 @@ namespace BackendData.Chart.Weapon
 
         public int WeaponID { get; private set; }
         public string WeaponName { get; private set; }
+        public string WeaponExplain {get; private set;}
         public float Atk { get; private set; }
         public float GrowingAtk { get; private set; }
         public float Delay { get; private set; }

@@ -392,8 +392,9 @@ GameObject:
   - component: {fileID: 6976257506947831688}
   - component: {fileID: 6976257506947831689}
   - component: {fileID: 6976257506947831690}
+  - component: {fileID: 4763587350990967048}
   m_Layer: 5
-  m_Name: WeaponShopItem
+  m_Name: UpgradeItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -491,6 +492,24 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!114 &4763587350990967048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6976257506947831796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e9d5d8cf9e19a4f822a160ed88c46f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _image: {fileID: 6976257506716601054}
+  _weaponName: {fileID: 6976257508020020574}
+  _weaponExplane: {fileID: 6976257506535262562}
+  _weaponAtk: {fileID: 6976257506978313487}
+  _weaponBuyButton: {fileID: 6976257506493826501}
+  _weaponPrice: {fileID: 6976257507549690326}
 --- !u!1 &6976257506978313482
 GameObject:
   m_ObjectHideFlags: 0

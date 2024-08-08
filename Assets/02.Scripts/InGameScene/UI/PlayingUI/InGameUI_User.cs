@@ -31,7 +31,7 @@ namespace InGameScene.UI
             _ExpSlider.maxValue = StaticManager.Backend.GameData.UserData.MaxExp;
             _ExpSlider.value = StaticManager.Backend.GameData.UserData.Exp;
 
-            _levelText.text = StaticManager.Backend.GameData.UserData.Level.ToString();
+            _levelText.text = "Lv." + StaticManager.Backend.GameData.UserData.Level.ToString();
             _moneyText.text = StaticManager.Backend.GameData.UserData.Money.ToString();
         }
     }
