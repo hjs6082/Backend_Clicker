@@ -52,12 +52,12 @@ namespace InGameScene
                 //_cloudManager = FindObjectOfType<CloudManager>();
                 _player = FindObjectOfType<Player>();
 
-                _bulletPrefab = Resources.Load<GameObject>("Prefabs/InGameScene/BulletObject");
-
+                //_bulletPrefab = Resources.Load<GameObject>("Prefabs/InGameScene/BulletObject");
+                
                 //_cloudManager.Init();
-                _player.Init(_bulletPrefab);
+                //_player.Init(_bulletPrefab);
 
-                Item.Init(_bulletPrefab);
+                //Item.Init(_bulletPrefab);
 
                 _uiManager.Init(_userUI, _leftUI, _enemyUI, _stageUI, _itemUI);
                 Game.Init(_player, _uiManager);
@@ -77,12 +77,11 @@ namespace InGameScene
                 // 우편의 갯수가 1개 이상이라면 우편 아이콘 표시
                 if (StaticManager.Backend.Post.Dictionary.Count > 0)
                 {
-                    FindObjectOfType<RightButtonGroupManager>().SetPostIconAlert(true);
+                    _uiManager.LeftUI.GetUI<InGameUI_Post>().SetPostIconAlert(true);
                 }
                 else
                 {
-                    FindObjectOfType<RightButtonGroupManager>().SetPostIconAlert(false);
-
+                    _uiManager.LeftUI.GetUI<InGameUI_Post>().SetPostIconAlert(false);
                 }
             }
             catch (Exception e)

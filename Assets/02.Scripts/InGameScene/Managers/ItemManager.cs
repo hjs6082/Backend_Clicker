@@ -74,35 +74,23 @@ namespace InGameScene
                 // 각 이름으로 구분하여 알맞는 행동 실행
                 if (item.ItemType.Equals("RedPotion"))
                 {
-                    float atk = item.ItemStat["Atk"];
+                    float multi = item.ItemStat["multi"];
                     float time = item.ItemStat["Time"];
-                    isSuccess = Managers.Buff.StartBuff(Buff.BuffStatType.Atk, atk, time,
-                        Buff.BuffAdditionType.Plus);
+                    isSuccess = Managers.Buff.StartBuff(Buff.BuffStatType.Atk, multi, time,
+                        Buff.BuffAdditionType.Multi);
                 }
-                else if (item.ItemType.Equals("BluePotion"))
+                else if (item.ItemType.Equals("FeverTime"))
                 {
                     float delay = item.ItemStat["Delay"];
                     float time = item.ItemStat["Time"];
                     isSuccess = Managers.Buff.StartBuff(Buff.BuffStatType.Delay, delay, time,
                         Buff.BuffAdditionType.Multi);
                 }
-                else if (item.ItemType.Equals("RedBoom"))
-                {
-                    float atk = item.ItemStat["Atk"];
-                    isSuccess = AttackEnemy(atk);
-                }
-                else if (item.ItemType.Equals("GoldenTime"))
+                else if (item.ItemType.Equals("GoldenPotion"))
                 {
                     float multi = item.ItemStat["Multi"];
                     float time = item.ItemStat["Time"];
                     isSuccess = Managers.Buff.StartBuff(Buff.BuffStatType.Gold, multi, time,
-                        Buff.BuffAdditionType.Multi);
-                }
-                else if (item.ItemType.Equals("StudyTime"))
-                {
-                    float multi = item.ItemStat["Multi"];
-                    float time = item.ItemStat["Time"];
-                    isSuccess = Managers.Buff.StartBuff(Buff.BuffStatType.Exp, multi, time,
                         Buff.BuffAdditionType.Multi);
                 }
                 else

@@ -231,7 +231,7 @@ public class BackendManager : MonoBehaviour {
         }
     }
 
-/*    // 일정 주기마다 랭킹 데이터 업데이트 호출
+    // 일정 주기마다 랭킹 데이터 업데이트 호출
     private IEnumerator UpdateRankScore() {
         var seconds = new WaitForSeconds(650);
 
@@ -247,8 +247,8 @@ public class BackendManager : MonoBehaviour {
             yield return seconds;
         }
     }
-*/
-    /*public void UpdateUserRankScore(string uuid, AfterUpdateFunc afterUpdateFunc) {
+
+    public void UpdateUserRankScore(string uuid, AfterUpdateFunc afterUpdateFunc) {
         // 쓰기 비용의 부담이 클 경우에는 각 랭킹별로 Param을 업데이트 하도록 설정.(현재는 일괄 처리)
         // 바뀐 데이터가 몇개 있는지 체크
         List<GameData> gameDatas = new List<GameData>();
@@ -282,9 +282,9 @@ public class BackendManager : MonoBehaviour {
                     });
             }
         }
-    }*/
+    }
 
-    /*// 일정 주기마다 우편을 불러오는 코루틴 함수
+    // 일정 주기마다 우편을 불러오는 코루틴 함수
     private IEnumerator GetAdminPostList() {
         var seconds = new WaitForSeconds(600);
         yield return seconds;
@@ -301,7 +301,7 @@ public class BackendManager : MonoBehaviour {
                     //호출하기 전 우편의 갯수와 동일하지 않다면 우편 아이콘 오른쪽에 표시
                     if (postCount != Post.Dictionary.Count) {
                         if (StaticManager.Backend.Post.Dictionary.Count > 0) {
-                            FindObjectOfType<InGameScene.RightButtonGroupManager>().SetPostIconAlert(true);
+                            FindObjectOfType<InGameScene.UI.InGameUI_Post>().SetPostIconAlert(true);
                         }
                     }
                 }
@@ -312,7 +312,7 @@ public class BackendManager : MonoBehaviour {
             });
             yield return seconds;
         }
-    }*/
+    }
 
     // 에러 발생시 게임로그를 삽입하는 함수
     public void SendBugReport(string className, string functionName, string errorInfo, int repeatCount = 3) {

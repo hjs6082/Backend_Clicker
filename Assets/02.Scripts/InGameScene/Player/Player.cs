@@ -92,10 +92,10 @@ namespace InGameScene
                 case MoveState.None: // 가만히 있을 경우
                     break;
                 case MoveState.MoveToAttack: // 공격을 위해 이동할경우(왼쪽 맨끝 -> 중간)
-                    _destination = new Vector3(-1.5f, 1.7f, 0);
+                    _destination = new Vector3(-4.41f, 0f, 0);
                     break;
                 case MoveState.MoveToNextStage: // 적을 처치하고 다음 스테이지로 넘어갈 경우(중간 -> 오른쪽 끝)
-                    _destination = new Vector3(4f, 1.7f, 0);
+                    _destination = new Vector3(-13.01f, 0f, 0);
                     break;
             }
 
