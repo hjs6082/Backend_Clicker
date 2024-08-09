@@ -43,7 +43,13 @@ namespace InGameScene.UI
             }
 
             // 2번 UI 현재 장비로 초기 설정
-            ChangeUI(2);
+            //ChangeUI(2);
+
+            _bottomUIPanel.SetActive(false);
+            foreach (var ui in _bottomUIs)
+            { 
+                ui.gameObject.SetActive(false);
+            }
         }
 
         // 바텀 내 각 BottomUIBase를 가지고 있는 UI 클래스에 접근

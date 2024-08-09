@@ -51,19 +51,19 @@ public class LoadingSceneManager : MonoBehaviour
         _initializeStep.Enqueue(() => { ShowDataName("트랜잭션 시도 함수"); TransactionRead(NextStep); });
 
         // 차트정보 불러오기 함수 Insert
-/*        _initializeStep.Enqueue(() => { ShowDataName("모든 차트 정보"); StaticManager.Backend.Chart.ChartInfo.BackendLoad(NextStep); });
+        _initializeStep.Enqueue(() => { ShowDataName("모든 차트 정보"); StaticManager.Backend.Chart.ChartInfo.BackendLoad(NextStep); });
         _initializeStep.Enqueue(() => { ShowDataName("무기 정보"); StaticManager.Backend.Chart.Weapon.BackendChartDataLoad(NextStep); });
         _initializeStep.Enqueue(() => { ShowDataName("적 정보"); StaticManager.Backend.Chart.Enemy.BackendChartDataLoad(NextStep); });
         _initializeStep.Enqueue(() => { ShowDataName("스테이지 정보"); StaticManager.Backend.Chart.Stage.BackendChartDataLoad(NextStep); });
         _initializeStep.Enqueue(() => { ShowDataName("아이템 정보"); StaticManager.Backend.Chart.Item.BackendChartDataLoad(NextStep); });
-        _initializeStep.Enqueue(() => { ShowDataName("상점 정보"); StaticManager.Backend.Chart.Shop.BackendChartDataLoad(NextStep); });
+        //_initializeStep.Enqueue(() => { ShowDataName("상점 정보"); StaticManager.Backend.Chart.Shop.BackendChartDataLoad(NextStep); });
         _initializeStep.Enqueue(() => { ShowDataName("퀘스트 정보"); StaticManager.Backend.Chart.Quest.BackendChartDataLoad(NextStep); });
 
         // 랭킹 정보 불러오기 함수 Insert
         _initializeStep.Enqueue(() => { ShowDataName("랭킹 정보 불러오기"); StaticManager.Backend.Rank.BackendLoad(NextStep); });
         // 우편 정보 불러오기 함수 Insert
         _initializeStep.Enqueue(() => { ShowDataName("관리자 우편 정보 불러오기"); StaticManager.Backend.Post.BackendLoad(NextStep); });
-        _initializeStep.Enqueue(() => { ShowDataName("랭킹 우편 정보 불러오기"); StaticManager.Backend.Post.BackendLoadForRank(NextStep); });*/
+        _initializeStep.Enqueue(() => { ShowDataName("랭킹 우편 정보 불러오기"); StaticManager.Backend.Post.BackendLoadForRank(NextStep); });
 
         //다음 씬으로 넘어가는 함수 Insert
 

@@ -115,8 +115,8 @@ namespace InGameScene
         // 생성된 적은 화면 밖에서 enemy객체의 생성 함수로 인해 화면 안으로 이동한다.
         private void CreateEnemy(BackendData.Chart.Stage.Item.EnemyInfo stageEnemyInfo)
         {
-            Vector3 enemyRespawnPosition = new Vector3(4, 2.5f, 0);
-            Vector3 enemyStayPosition = new Vector3(1, 2.5f, 0);
+            Vector3 enemyRespawnPosition = new Vector3(12.56f, 0f, 0);
+            Vector3 enemyStayPosition = new Vector3(5.7f, 0f, 0);
 
             // 적 차트정보에서 데이터 불러오기
             BackendData.Chart.Enemy.Item enemyInfo =

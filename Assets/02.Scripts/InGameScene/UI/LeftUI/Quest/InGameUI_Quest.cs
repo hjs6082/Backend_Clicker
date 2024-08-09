@@ -23,7 +23,6 @@ namespace InGameScene.UI
 
         public override void Init()
         {
-
             // 퀘스트 차트에 있는 모든 정보 불러와 생성
             foreach (var questItem in StaticManager.Backend.Chart.Quest.Dictionary)
             {
