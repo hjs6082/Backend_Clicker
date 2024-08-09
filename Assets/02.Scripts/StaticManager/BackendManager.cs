@@ -44,11 +44,11 @@ public class BackendManager : MonoBehaviour {
             GameDataList = new Dictionary<string, GameData>();
 
         public BackendGameData() {
-/*            GameDataList.Add("내 무기 정보", WeaponInventory);
-            GameDataList.Add("내 무기 장비", WeaponEquip);
+            GameDataList.Add("내 무기 정보", WeaponInventory);
+            //GameDataList.Add("내 무기 장비", WeaponEquip);
             GameDataList.Add("내 퀘스트 정보", QuestAchievement);
             GameDataList.Add("내 유저 정보", UserData);
-            GameDataList.Add("내 아이템 정보", ItemInventory);*/
+            GameDataList.Add("내 아이템 정보", ItemInventory);
         }
     }
 
@@ -110,8 +110,8 @@ public class BackendManager : MonoBehaviour {
 
         Chart = new();
         GameData = new();
-/*        Rank = new();
-        Post = new();*/
+        Rank = new();
+        Post = new();
     }
 
     //SendQueue를 관리해주는 SendQueue 매니저 생성
@@ -125,8 +125,8 @@ public class BackendManager : MonoBehaviour {
     // 일정주기마다 데이터를 저장/불러오는 코루틴 시작(인게임 시작 시)
     public void StartUpdate() {
         StartCoroutine(UpdateGameDataTransaction());
-        /*StartCoroutine(UpdateRankScore());
-        StartCoroutine(GetAdminPostList());*/
+        StartCoroutine(UpdateRankScore());
+        StartCoroutine(GetAdminPostList());
     }
 
     // 호출 시, 코루틴 내 함수들의 동작을 멈추게 하는 함수

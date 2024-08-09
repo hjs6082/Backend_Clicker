@@ -78,15 +78,15 @@ namespace InGameScene
                 throw new Exception($"UpdateItemInventory({itemID}, {count}) 중 에러가 발생하였습니다\n{e}");
             }
         }
-        /*
+        
         // 무기 인벤토리 관련 데이터와 UI를 업데이트하는 함수
         public void UpdateWeaponInventory(int weaponId)
         {
             try
             {
                 string myWeaponId = StaticManager.Backend.GameData.WeaponInventory.AddWeapon(weaponId);
-                _uiManager.BottomUI.GetUI<InGameUI_Equip>().AddWeaponObjectInInventoryUI(myWeaponId);
-                _uiManager.BottomUI.GetUI<InGameUI_Quest>()
+                //_uiManager.BottomUI.GetUI<InGameUI_Equip>().AddWeaponObjectInInventoryUI(myWeaponId);
+                _uiManager.LeftUI.GetUI<InGameUI_Quest>()
                     .UpdateUIForGetItem(RequestItemType.Weapon, weaponId);
             }
             catch (Exception e)
@@ -95,6 +95,7 @@ namespace InGameScene
             }
         }
 
+        /*
         // 무기 장착 관련 데이터와 UI를 업데이트하는 함수
         public void UpdateWeaponEquip(int position, string prevWeaponId, string myWeaponId)
         {

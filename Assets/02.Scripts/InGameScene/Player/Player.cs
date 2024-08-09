@@ -29,11 +29,12 @@ namespace InGameScene
         private PlayerAfterMove _playerAfterMove;
 
         private GameObject _bulletGameObject; // 총알 Prefab
-        private WeaponObject[] _weaponArray; // 들고있는 총의 배열 
+        [SerializeField]
+        private WeaponObject _weaponObject; // 들고있는 무기
 
         public void Init(GameObject bulletPrefab)
         {
-            _weaponArray = GetComponentsInChildren<WeaponObject>();
+            _weaponObject = GetComponentInChildren<WeaponObject>();
             _bulletGameObject = bulletPrefab;
             SetWeapon();
         }
@@ -41,12 +42,9 @@ namespace InGameScene
         // 총의 방향을 지정할 새로운 적의 위치 지정
         public void SetNewEnemy(EnemyObject newEnemy)
         {
-            foreach (var gun in _weaponArray)
+            if(_weaponObject.enabled)
             {
-                if (gun.enabled)
-                {
-                    gun.SetEnemy(newEnemy);
-                }
+                _weaponObject.SetEnemy(newEnemy);
             }
         }
 
@@ -110,11 +108,7 @@ namespace InGameScene
             // 현재 장착중인 무기 데이터 불러오기
             var weaponInventoryDic = StaticManager.Backend.GameData.WeaponInventory.Dictionary;
 
-            // 현재 장착중인 모든 무기 해제
-            foreach (var weaponPos in _weaponArray)
-            {
-                weaponPos.ReleaseGun();
-            }
+            _weaponObject.ReleaseGun();
 
 /*            // 장착된 무기로 다시 무기 등록
             foreach (var weaponEquip in StaticManager.Backend.GameData.WeaponEquip.Dictionary)

@@ -16,6 +16,7 @@ namespace InGameScene.UI
         [SerializeField] private TMP_Text _weaponExplane;
         [SerializeField] private TMP_Text _weaponAtk;
         [SerializeField] private Button _weaponBuyButton;
+        [SerializeField] private Button _weaponEquipButton;
         [SerializeField] private TMP_Text _weaponPrice;
 
         private BackendData.Chart.Weapon.Item _weaponInfo;
@@ -36,6 +37,8 @@ namespace InGameScene.UI
             _weaponPrice.text = weaponInfo.Price.ToString();
 
             _weaponBuyButton.onClick.AddListener(BuyButton);
+            
+            //TODO: Weapon이 Inventory에 있을경우 EquipButton을 활성화.
         }
 
         // 구매 버튼 클릭시 현재 자금 무기를 비교하여 구매 여부 판단
@@ -51,7 +54,8 @@ namespace InGameScene.UI
             InGameScene.Managers.Game.UpdateUserData(-_weaponInfo.Price, 0);
             StaticManager.UI.AlertUI.OpenAlertUI("구매 완료", _weaponInfo.WeaponName + "이(가) 구매 완료되었습니다.");
             //TODO : 바로 착용시킬것
-            //InGameScene.Managers.Game.UpdateWeaponInventory(_weaponInfo.WeaponID);
+            InGameScene.Managers.Game.UpdateWeaponInventory(_weaponInfo.WeaponID);
+            _weaponEquipButton.gameObject.SetActive(true);
         }
     }
 }

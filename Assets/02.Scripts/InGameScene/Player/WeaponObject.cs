@@ -66,7 +66,12 @@ namespace InGameScene
             }
 
             RotateToEnemyUpdate();
-            ShootUpdate();
+            if(Input.GetMouseButtonDown(0))
+            {
+                Shoot();
+            }
+
+            //ShootUpdate();
 
         }
 
@@ -79,7 +84,10 @@ namespace InGameScene
             _gunSpriteTransform.rotation = targetRotation;
         }
 
-        // 다음 리로딩까지 시간을 계산하는 함수
+        //터치시 총을 발사하므로 해당함수 주석처리 
+
+
+/*        // 다음 리로딩까지 시간을 계산하는 함수
         // 
         void ShootUpdate()
         {
@@ -90,7 +98,7 @@ namespace InGameScene
                 Shoot();
                 _currentTime = 0;
             }
-        }
+        }*/
 
         // 무기를 겨눌 적을 지정하는 함수
         public void SetEnemy(EnemyObject enemyItem)

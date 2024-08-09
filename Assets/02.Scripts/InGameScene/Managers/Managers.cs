@@ -52,7 +52,7 @@ namespace InGameScene
                 //_cloudManager = FindObjectOfType<CloudManager>();
                 _player = FindObjectOfType<Player>();
 
-                //_bulletPrefab = Resources.Load<GameObject>("Prefabs/InGameScene/BulletObject");
+                _bulletPrefab = Resources.Load<GameObject>("Prefabs/InGameScene/BulletObject");
                 
                 //_cloudManager.Init();
                 //_player.Init(_bulletPrefab);

@@ -283,6 +283,7 @@ GameObject:
   - component: {fileID: 5110904330971691739}
   - component: {fileID: 5110904330971691736}
   - component: {fileID: 5110904330971691737}
+  - component: {fileID: 9120828202395379022}
   m_Layer: 5
   m_Name: RankUIItem
   m_TagString: Untagged
@@ -380,6 +381,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 40
   image: {fileID: 5110904330971691739}
+--- !u!114 &9120828202395379022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5110904330971691732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6c1e1816104d7043ad66bdd9fb817e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rankText: {fileID: 219888783804816386}
+  nickNameText: {fileID: 3073515652444718838}
+  rankScoreText: {fileID: 6844810790971595760}
 --- !u!1 &5110904330971691733
 GameObject:
   m_ObjectHideFlags: 0
