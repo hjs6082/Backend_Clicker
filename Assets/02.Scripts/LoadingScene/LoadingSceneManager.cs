@@ -67,7 +67,6 @@ public class LoadingSceneManager : MonoBehaviour
 
         //다음 씬으로 넘어가는 함수 Insert
 
-
         //게이지 바 지정
         _maxLoadingCount = _initializeStep.Count;
         loadingSlider.maxValue = _maxLoadingCount;
@@ -184,6 +183,7 @@ public class LoadingSceneManager : MonoBehaviour
     }
 
     // 인게임씬으로 이동가는 함수
+
     private void InGameStart()
     {
         StaticManager.UI.SetLoadingIcon(false);
