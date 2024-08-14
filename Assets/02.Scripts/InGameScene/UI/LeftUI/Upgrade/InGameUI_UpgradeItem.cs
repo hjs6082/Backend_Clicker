@@ -1,5 +1,6 @@
 // Copyright 2013-2022 AFI, INC. All rights reserved.
 
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,8 +38,19 @@ namespace InGameScene.UI
             _weaponPrice.text = weaponInfo.Price.ToString();
 
             _weaponBuyButton.onClick.AddListener(BuyButton);
-            
+
+            _weaponEquipButton.onClick.AddListener(EquipButton);
+
             //TODO: Weapon이 Inventory에 있을경우 EquipButton을 활성화.
+            foreach (var equipWeapon in StaticManager.Backend.GameData.WeaponInventory.Dictionary)
+            {
+                if(equipWeapon.Value.WeaponChartId == _weaponInfo.WeaponID)
+                {
+                    _weaponBuyButton.gameObject.SetActive(false);
+                    _weaponEquipButton.gameObject.SetActive(true);
+                }
+            }
+
         }
 
         // 구매 버튼 클릭시 현재 자금 무기를 비교하여 구매 여부 판단
@@ -54,8 +66,27 @@ namespace InGameScene.UI
             InGameScene.Managers.Game.UpdateUserData(-_weaponInfo.Price, 0);
             StaticManager.UI.AlertUI.OpenAlertUI("구매 완료", _weaponInfo.WeaponName + "이(가) 구매 완료되었습니다.");
             //TODO : 바로 착용시킬것
+            //this.gameObject.SetActive(false);
             InGameScene.Managers.Game.UpdateWeaponInventory(_weaponInfo.WeaponID);
             _weaponEquipButton.gameObject.SetActive(true);
+        }
+
+        void EquipButton()
+        {
+            //무기 변경
+            var weaponEquipKeys = new List<string>(StaticManager.Backend.GameData.WeaponEquip.Dictionary.Keys);
+
+            foreach (var item in weaponEquipKeys)
+            {
+                foreach (var item2 in StaticManager.Backend.GameData.WeaponInventory.Dictionary.Values)
+                {
+                    if (item2.WeaponChartId == _weaponInfo.WeaponID)
+                    {
+                        InGameScene.Managers.Game.UpdateWeaponEquip(item, item2.MyWeaponId);
+                        StaticManager.UI.AlertUI.OpenAlertUI("착용 완료", _weaponInfo.WeaponName + "이(가) 착용되었습니다.");
+                    }
+                }
+            }
         }
     }
 }

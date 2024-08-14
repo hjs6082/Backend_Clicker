@@ -95,23 +95,23 @@ namespace InGameScene
             }
         }
 
-        /*
+        
         // 무기 장착 관련 데이터와 UI를 업데이트하는 함수
-        public void UpdateWeaponEquip(int position, string prevWeaponId, string myWeaponId)
+        public void UpdateWeaponEquip(string prevWeaponId, string myWeaponId)
         {
             try
             {
                 // 기본 변경과 
-                StaticManager.Backend.GameData.WeaponEquip.ChangeEquip(position, prevWeaponId, myWeaponId);
+                StaticManager.Backend.GameData.WeaponEquip.ChangeEquip(prevWeaponId, myWeaponId);
                 _player.SetWeapon();
-                _uiManager.BottomUI.GetUI<InGameUI_Equip>().UpdateUI(prevWeaponId, myWeaponId);
+                //_uiManager.BottomUI.GetUI<InGameUI_Equip>().UpdateUI(prevWeaponId, myWeaponId);
             }
             catch (Exception e)
             {
-                StaticManager.UI.AlertUI.OpenErrorUI(GetType().Name, "UpdateWeaponEquip", $"UpdateWeaponEquip({position}, {prevWeaponId}, {myWeaponId}) 중 에러가 발생하였습니다\n" + e.ToString());
+                StaticManager.UI.AlertUI.OpenErrorUI(GetType().Name, "UpdateWeaponEquip", $"UpdateWeaponEquip({prevWeaponId}, {myWeaponId}) 중 에러가 발생하였습니다\n" + e.ToString());
             }
 
-        }*/
+        }
     }
 
 }

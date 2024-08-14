@@ -55,7 +55,7 @@ namespace InGameScene
                 _bulletPrefab = Resources.Load<GameObject>("Prefabs/InGameScene/BulletObject");
                 
                 //_cloudManager.Init();
-                //_player.Init(_bulletPrefab);
+                _player.Init(_bulletPrefab);
 
                 //Item.Init(_bulletPrefab);
 

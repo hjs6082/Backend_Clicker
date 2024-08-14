@@ -798,6 +798,7 @@ MonoBehaviour:
   _weaponExplane: {fileID: 6976257506535262562}
   _weaponAtk: {fileID: 6976257506978313487}
   _weaponBuyButton: {fileID: 6976257506493826501}
+  _weaponEquipButton: {fileID: 7492734548996311156}
   _weaponPrice: {fileID: 6976257507549690326}
 --- !u!1 &6976257506978313482
 GameObject:
