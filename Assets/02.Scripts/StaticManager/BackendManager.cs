@@ -38,14 +38,14 @@ public class BackendManager : MonoBehaviour {
         public readonly BackendData.GameData.UserData UserData = new(); // UserData 테이블 데이터
         public readonly BackendData.GameData.QuestAchievement.Manager QuestAchievement = new(); // QuestAchievement 테이블 데이터
         public readonly BackendData.GameData.ItemInventory ItemInventory = new(); // ItemInventory 테이블 데이터
-        /*public readonly BackendData.GameData.WeaponEquip.Manager WeaponEquip = new(); // WeaponEquip 테이블 데이터*/
+        public readonly BackendData.GameData.WeaponEquip.Manager WeaponEquip = new(); // WeaponEquip 테이블 데이터*/
 
         public readonly Dictionary<string, BackendData.Base.GameData>
             GameDataList = new Dictionary<string, GameData>();
 
         public BackendGameData() {
             GameDataList.Add("내 무기 정보", WeaponInventory);
-            //GameDataList.Add("내 무기 장비", WeaponEquip);
+            GameDataList.Add("내 무기 장비", WeaponEquip);
             GameDataList.Add("내 퀘스트 정보", QuestAchievement);
             GameDataList.Add("내 유저 정보", UserData);
             GameDataList.Add("내 아이템 정보", ItemInventory);

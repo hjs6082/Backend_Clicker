@@ -29,11 +29,11 @@ namespace InGameScene
         private PlayerAfterMove _playerAfterMove;
 
         private GameObject _bulletGameObject; // 총알 Prefab
-        [SerializeField]
         private WeaponObject _weaponObject; // 들고있는 무기
 
         public void Init(GameObject bulletPrefab)
         {
+            Debug.Log("함수가 실행되었습니다.");
             _weaponObject = GetComponentInChildren<WeaponObject>();
             _bulletGameObject = bulletPrefab;
             SetWeapon();
@@ -110,7 +110,7 @@ namespace InGameScene
 
             _weaponObject.ReleaseGun();
 
-/*            // 장착된 무기로 다시 무기 등록
+            // 장착된 무기로 다시 무기 등록
             foreach (var weaponEquip in StaticManager.Backend.GameData.WeaponEquip.Dictionary)
             {
                 string myWeaponId = weaponEquip.Key;
@@ -120,13 +120,13 @@ namespace InGameScene
                 if (weaponInventoryDic.ContainsKey(myWeaponId))
                 {
                     var weaponInventory = weaponInventoryDic[myWeaponId];
-                    _weaponArray[weaponEquip.Value].ActiveGun(weaponInventory, _bulletGameObject);
+                    _weaponObject.ActiveGun(weaponInventory, _bulletGameObject);
                 }
                 else
                 {
                     throw new Exception($"인벤토리에 존재하지 않습니다.\n {myWeaponId}");
                 }
-            }*/
+            }
         }
     }
 }
