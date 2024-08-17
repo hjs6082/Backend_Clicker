@@ -37,7 +37,8 @@ namespace InGameScene.UI
         {
             if (count <= 0)
             {
-                _inventory.DeleteUseItem(_itemID);
+                _itemCountText.text = count.ToString();
+                //_inventory.DeleteUseItem(_itemID);
             }
             else
             {
