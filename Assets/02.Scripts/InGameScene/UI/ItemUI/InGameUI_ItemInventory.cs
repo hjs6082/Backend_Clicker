@@ -20,9 +20,14 @@ namespace InGameScene.UI
                     useItemButton.Init(this, itemID, itemCount);
                     _useItemDic[itemID] = useItemButton;
                 }
-                else
+                /*                else
+                                {
+                                    useItemButton.gameObject.SetActive(false);
+                                }*/
+
+                foreach (var item in StaticManager.Backend.GameData.ItemInventory.Dictionary.Keys)
                 {
-                    useItemButton.gameObject.SetActive(false);
+                    Debug.Log("아이템 키는 : " + item);
                 }
             }
         }
