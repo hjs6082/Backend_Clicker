@@ -6,6 +6,13 @@ using UnityEngine.UI;
 
 public class LoginSceneManager : MonoBehaviour
 {
+    struct UserTokenJson
+    {
+        public string id;
+        public string pw;
+        public string language;
+    }
+
     private static LoginSceneManager _instance;
 
     public static LoginSceneManager Instance
@@ -156,6 +163,5 @@ public class LoginSceneManager : MonoBehaviour
     public void GoNextScene()
     {
         StaticManager.Instance.ChangeScene("LoadingScene");
-
     }
 }

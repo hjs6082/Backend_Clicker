@@ -148,10 +148,12 @@ public class LoginUI_Policy : BaseUI {
     // 모바일 환경에서는 푸시 여부까지 확인하고 진행
     // 닉네임 화면으로 이동한다.
     private void AcceptPolicy() {
+        //TODO: 토큰 연결
+        string token = "";
         if (_checkBoxAgree[(int)AgreeCheckBoxType.PUSH_AGREE] == true) {
 #if UNITY_ANDROID
-//[뒤끝] 푸시 설정 함수
-            SendQueue.Enqueue(Backend.Android.PutDeviceToken, callback => {
+            //[뒤끝] 푸시 설정 함수
+            SendQueue.Enqueue(Backend.Android.PutDeviceToken, token, callback => {
                 if (IsBackendError(callback)) {
                     StaticManager.UI.AlertUI.OpenWarningUI("푸시 알람 미처리 안내",
                         "푸시 알람이 정상적으로 처리되지 않았습니다.\n이후 설정에서 푸시 알람을 설정해주시기 바랍니다.", () => { AfterAccept(); });
@@ -163,7 +165,7 @@ public class LoginUI_Policy : BaseUI {
  #elif UNITY_IOS
 //[뒤끝] 푸시 설정 함수
 
-            SendQueue.Enqueue(Backend.iOS.PutDeviceToken, callback => {
+            SendQueue.Enqueue(Backend.iOS.PutDeviceToken, token, callback => {
                 if (IsBackendError(callback)) {
                     StaticManager.UI.AlertUI.OpenWarningUI("푸시 알람 미처리 안내",
                         "푸시 알람이 정상적으로 처리되지 않았습니다.\n이후 설정에서 푸시 알람을 설정해주시기 바랍니다.", () => { AfterAccept(); });
