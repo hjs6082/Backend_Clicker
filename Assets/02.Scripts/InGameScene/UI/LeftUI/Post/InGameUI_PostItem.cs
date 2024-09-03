@@ -19,7 +19,8 @@ namespace InGameScene.UI
 
         [SerializeField] private TMP_Text postRewardText;
         [SerializeField] private Button postReceiveButton;
-        [SerializeField] private TMP_Text expirationDateText;
+        [SerializeField] private Sprite postItemIcon;
+        //[SerializeField] private TMP_Text expirationDateText;
 
         private BackendData.Post.PostItem _postItem;
 
@@ -37,7 +38,7 @@ namespace InGameScene.UI
                 postTitleText.text = _postItem.title;
                 postContentText.text = _postItem.content;
 
-                if ((_postItem.expirationDate - DateTime.UtcNow).Days > 0)
+               /* if ((_postItem.expirationDate - DateTime.UtcNow).Days > 0)
                 {
                     expirationDateText.text = (_postItem.expirationDate - DateTime.UtcNow).Days + "일 남음";
                 }
@@ -45,7 +46,7 @@ namespace InGameScene.UI
                 {
                     expirationDateText.text = (_postItem.expirationDate - DateTime.UtcNow).Hours + "시간 남음";
 
-                }
+                }*/
 
                 string itemString = string.Empty;
                 foreach (var item in _postItem.items)

@@ -21,6 +21,8 @@ namespace InGameScene.UI
         // 퀘스트 유형별 아이템 리스트(key값은 questType)
         private Dictionary<int, List<InGameUI_QuestItem>> _questItemDicByQuestType = new();
 
+        private Dictionary<QuestRepeatType, List<InGameUI_QuestItem>> _questItemDicByRepeatType = new Dictionary<QuestRepeatType, List<InGameUI_QuestItem>>();
+        
         public override void Init()
         {
             // 퀘스트 차트에 있는 모든 정보 불러와 생성
@@ -34,23 +36,36 @@ namespace InGameScene.UI
                 useItem.Init(questItem.Value);
                 _questItemDic.Add(questItem.Value.QuestID, useItem);
 
-                // 해당 퀘스트 타입
-                int typeNum = (int)questItem.Value.QuestType;
+                // 퀘스트 반복 타입에 따른 분류
+                QuestRepeatType repeatType = questItem.Value.QuestRepeatType;
 
-                // 퀘스트 타입이 있으면 삽입, 없으면 새로 생성
-                // 퀘스트 타입별로 List를 만들어 삽입
-                if (!_questItemDicByQuestType.ContainsKey(typeNum))
+                // 해당 퀘스트 타입이 있으면 삽입, 없으면 새로 생성
+                if (!_questItemDicByRepeatType.ContainsKey(repeatType))
                 {
-                    _questItemDicByQuestType.Add(typeNum, new List<InGameUI_QuestItem>());
+                    _questItemDicByRepeatType.Add(repeatType, new List<InGameUI_QuestItem>());
                 }
 
-                _questItemDicByQuestType[typeNum].Add(useItem);
+                _questItemDicByRepeatType[repeatType].Add(useItem);
+            }
+        }
+
+        // 퀘스트 타입에 따른 UI 업데이트 함수
+        public void UpdateQuestUI(QuestRepeatType repeatType)
+        {
+            // 기존 UI를 모두 제거
+            foreach (Transform child in _QuestParentObject.transform)
+            {
+                Destroy(child.gameObject);
             }
 
-            // 퀘스트 타입별로 업데이트(골드 관련 퀘스트는 UserData, 무기 관련은 WeaponInventory등)
-            for (int i = 0; i < Enum.GetValues(typeof(QuestType)).Length; i++)
+            // 선택된 타입의 퀘스트들만 표시
+            if (_questItemDicByRepeatType.ContainsKey(repeatType))
             {
-                UpdateUI((QuestType)i);
+                foreach (var questItem in _questItemDicByRepeatType[repeatType])
+                {
+                    questItem.gameObject.SetActive(true);
+                    questItem.transform.SetParent(_QuestParentObject.transform, false);
+                }
             }
         }
 
@@ -129,6 +144,21 @@ namespace InGameScene.UI
             {
                 list.CheckItem(requestItemType, itemId);
             }
+        }
+
+        public void OnDayButtonClicked()
+        {
+            UpdateQuestUI(QuestRepeatType.Day);
+        }
+
+        public void OnWeekButtonClicked()
+        {
+            UpdateQuestUI(QuestRepeatType.Week);
+        }
+
+        public void OnMonthButtonClicked()
+        {
+            UpdateQuestUI(QuestRepeatType.Month);
         }
     }
 }
