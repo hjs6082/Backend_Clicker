@@ -4,28 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIChatList : MonoBehaviour
-{
+{/*
     public Toggle CheckBox = null;
 
     public Image Avatar = null;
+*/
+    //public Text Name = null;
 
-    public Text Name = null;
+    public TMPro.TMP_Text Message = null;
 
-    public Text Message = null;
-
-    public Text Time = null;
+  /*  public Text Time = null;
 
     public Button ReportButton = null;
-
+*/
     private UInt64 Index = 0;
 
-    private string Tag = string.Empty;
-
-    public void SetData(UInt64 index, string avatar, string name, string message, string time, string tag, Action<UInt64, string> report, Action<bool, string> translate, bool is_my = false)
+    public void SetData(UInt64 index, string name, string message, bool is_my = false)
     {
         Index = index;
-        Tag = tag;
-
+/*
         if (avatar == string.Empty || avatar == "default")
         {
             Avatar.sprite = Resources.Load<Sprite>("Images/Girl_5");
@@ -33,19 +30,19 @@ public class UIChatList : MonoBehaviour
         else
         {
             Avatar.sprite = Resources.Load<Sprite>("Images/" + avatar);
-        }
+        }*/
 
         if (is_my)
         {
-            Name.text = name + " (You)";
+            Message.text = name + " (You) : " + message;
         }
         else
         {
-            Name.text = name;
+            Message.text = name + " : " + message;
         }
         
-        Message.text = message;
-        Time.text = time;
+
+/*        Time.text = time;
 
         ReportButton.onClick.RemoveAllListeners();
         ReportButton.onClick.AddListener(() =>
@@ -70,13 +67,13 @@ public class UIChatList : MonoBehaviour
                     translate(isOn, key);
                 }
             }
-        });
+        });*/
     }
 
-    public bool IsEqual(UInt64 index, string tag)
+/*    public bool IsEqual(UInt64 index, string tag)
     {
         return Index == index && Tag == tag;
-    }
+    }*/
 
     public void SetMessage(string message)
     {

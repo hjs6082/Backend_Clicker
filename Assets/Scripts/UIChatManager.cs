@@ -1,4 +1,4 @@
-using BackndChat;
+/*using BackndChat;
 
 using System;
 using System.Collections.Generic;
@@ -314,13 +314,13 @@ public class UIChatManager : MonoBehaviour, BackndChat.IChatClientListener
         ChatClient.SendJoinPrivateChannel(channelGroup, channelNumber, password);
     }
 
-/*    public void OnClickJoinChannel()
+*//*    public void OnClickJoinChannel()
     {
         if (JoinChannelPopup)
         {
             JoinChannelPopup.GetComponent<UIJoinChannelManager>().SetData(SendCreatePrivateChannel, SendJoinOpenChannel, SendJoinPrivateChannel);
         }
-    }*/
+    }*//*
 
     public void OnJoinChannel(ChannelInfo channelInfo)
     {
@@ -351,7 +351,7 @@ public class UIChatManager : MonoBehaviour, BackndChat.IChatClientListener
 
         GameObject channelInfoObj = Instantiate(Resources.Load<GameObject>("Prefabs/ChannelInfo"), ChatContent.transform);
         channelInfoObj.GetComponent<TMPro.TextMeshProUGUI>().text = channelInfo.ChannelName + "채널에 입장하셨습니다 " + "채널 현재 인원 : " + channelInfo.Players.Count;
-        /*
+        *//*
         GameObject channelList = Instantiate(Resources.Load<GameObject>("Prefabs/ChannelList"), ChannelContent.transform);
         channelList.name = channelInfo.ChannelGroup + "_" + channelInfo.ChannelName + "_" + channelInfo.ChannelNumber.ToString();
         channelList.GetComponent<UIChannelList>().AddChannel(channelInfo.ChannelGroup, channelInfo.ChannelName, channelInfo.ChannelNumber, OnChannelSelected);
@@ -359,7 +359,7 @@ public class UIChatManager : MonoBehaviour, BackndChat.IChatClientListener
         if (ChannelList.Count == 1)
         {
             OnChannelSelected(channelInfo.ChannelGroup, channelInfo.ChannelName, channelInfo.ChannelNumber);
-        }*/
+        }*//*
     }
 
     
@@ -383,7 +383,7 @@ public class UIChatManager : MonoBehaviour, BackndChat.IChatClientListener
             ChannelList.Remove(channelInfo.ChannelGroup);
         }
 
-/*        if (ChannelContent != null)
+*//*        if (ChannelContent != null)
         {
             foreach (Transform child in ChannelContent.transform)
             {
@@ -393,7 +393,7 @@ public class UIChatManager : MonoBehaviour, BackndChat.IChatClientListener
                     break;
                 }
             }
-        }*/
+        }*//*
 
         if (CurrentChannelGroup == channelInfo.ChannelGroup && CurrentChannelName == channelInfo.ChannelName && CurrentChannelNumber == channelInfo.ChannelNumber)
         {
@@ -820,3 +820,4 @@ public class UIChatManager : MonoBehaviour, BackndChat.IChatClientListener
         ChatClient?.Dispose();
     }
 }
+*/
