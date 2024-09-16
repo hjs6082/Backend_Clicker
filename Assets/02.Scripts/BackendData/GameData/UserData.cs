@@ -16,6 +16,8 @@ namespace BackendData.GameData
     {
         public int Level { get; private set; }
         public float Money { get; private set; }
+        public int Gem { get; private set; }
+        public int PlayerIcon { get; private set; }
         public string LastLoginTime { get; private set; }
 
         public float Exp { get; private set; }
@@ -44,6 +46,8 @@ namespace BackendData.GameData
             Level = 1;
             Money = 10000;
             MaxExp = 100;
+            Gem = 10;
+            PlayerIcon = 1;
         }
 
         // Backend.GameData.GetMyData 호출 이후 리턴된 값을 파싱하여 캐싱하는 함수
@@ -54,6 +58,8 @@ namespace BackendData.GameData
             Exp = float.Parse(gameDataJson["Exp"].ToString());
             MaxExp = float.Parse(gameDataJson["MaxExp"].ToString());
             Money = float.Parse(gameDataJson["Money"].ToString());
+            Gem = int.Parse(gameDataJson["Gem"].ToString());
+            PlayerIcon = int.Parse(gameDataJson["PlayerIcon"].ToString());
             LastLoginTime = gameDataJson["LastLoginTime"].ToString();
 
             DayUsingGold = float.Parse(gameDataJson["DayUsingGold"].ToString());
@@ -86,6 +92,8 @@ namespace BackendData.GameData
 
             param.Add("Level", Level);
             param.Add("Money", Money);
+            param.Add("Gem", Gem);
+            param.Add("PlayerIcon", PlayerIcon);
             param.Add("Exp", Exp);
             param.Add("MaxExp", MaxExp);
             param.Add("LastLoginTime", string.Format("{0:MM-DD:HH:mm:ss.fffZ}", DateTime.Now.ToString(CultureInfo.InvariantCulture)));
@@ -133,6 +141,22 @@ namespace BackendData.GameData
                 }
             }
         }
+
+        // 유저의 정보를 변경하는 함수
+        public void UpdateGem(int gem)
+        {
+            IsChangedData = true;
+
+            Gem += gem;
+        }
+
+        public void UpdatePlayerIcon(int playerIconNum)
+        {
+            IsChangedData = true;
+
+            PlayerIcon = playerIconNum;
+        }
+
 
         // 레벨업하는 함수
         private void LevelUp()

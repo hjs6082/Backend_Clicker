@@ -40,14 +40,14 @@ namespace InGameScene.UI
         // 구매 확정 처리
         private void OnConfirmPurchase(int price, int reward, RewardType rewardType)
         {
-            if (StaticManager.Backend.GameData.UserData.Money < price)
+            if (StaticManager.Backend.GameData.UserData.Gem < price)
             {
-                StaticManager.UI.AlertUI.OpenWarningUI("구매 불가", "현재 자금이 부족하여 해당 아이템을 구매할 수 없습니다");
+                StaticManager.UI.AlertUI.OpenWarningUI("구매 불가", "현재 젬이 부족하여 해당 아이템을 구매할 수 없습니다");
                 OnCancelPurchase();
                 return;
             }
 
-            InGameScene.Managers.Game.UpdateUserData(-price, 0);
+            InGameScene.Managers.Game.UpdateGem(-price);
             AddReward(rewardType, reward);
             UpdateUI();
 
