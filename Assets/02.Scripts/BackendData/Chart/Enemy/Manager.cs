@@ -38,7 +38,13 @@ namespace BackendData.Chart.Enemy
                 Item info = new Item(eachItem);
 
                 _dictionary.Add(info.EnemyID, info);
-                info.EnemySprite = base.AddOrGetImageDictionary(_enemyImages, "Sprite/Enemy/", info.Image);
+                string prefabPath = $"Prefabs/Monster/{info.Image}";
+                GameObject enemyPrefab = Resources.Load<GameObject>(prefabPath);
+
+                if (enemyPrefab == null)
+                {
+                    Debug.LogError($"Prefab not found for enemy: {info.EnemyName} at path {prefabPath}");
+                }
             }
         }
     }

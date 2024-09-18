@@ -125,14 +125,26 @@ namespace InGameScene
             // 적 강화비율
             float multiStat = stageEnemyInfo.MultiStat;
 
-            GameObject enemyObject = GameObject.Instantiate(_enemyPrefab);
+            // 프리팹 로딩 (차트의 Image 이름을 기반으로 프리팹을 로드)
+            string prefabPath = $"Prefabs/Monster/{enemyInfo.Image}";
+            GameObject enemyPrefab = Resources.Load<GameObject>(prefabPath);
+
+            if (enemyPrefab == null)
+            {
+                Debug.LogError($"Prefab not found at path: {prefabPath}");
+                return;
+            }
+
+            // 적 프리팹을 인스턴스화
+            GameObject enemyObject = GameObject.Instantiate(enemyPrefab);
             enemyObject.transform.localPosition = enemyRespawnPosition;
             enemyObject.transform.localScale = new Vector3(1, 1, 1);
-            EnemyObject enemy = enemyObject.GetComponent<EnemyObject>();
 
+            EnemyObject enemy = enemyObject.GetComponent<EnemyObject>();
             enemy.Init(enemyInfo, multiStat, enemyStayPosition);
             _enemyItem = enemy;
         }
+
 
         // 현재 적 상태를 업데이트 해주는 함수
         // 적 객체에서 해당 클래스로 호출한다.
