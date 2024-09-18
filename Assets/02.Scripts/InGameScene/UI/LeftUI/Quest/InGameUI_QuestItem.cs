@@ -15,11 +15,11 @@ namespace InGameScene.UI
     //===========================================================
     public class InGameUI_QuestItem : MonoBehaviour
     {
-        [SerializeField] private TMP_Text _questReqeatTypeText;
+        //[SerializeField] private TMP_Text _questReqeatTypeText;
         [SerializeField] private TMP_Text _questContentText;
         [SerializeField] private TMP_Text _questRewardText;
-        [SerializeField] private TMP_Text _questRequestText;
-        [SerializeField] private TMP_Text _myRequestAchieveText;
+        //[SerializeField] private TMP_Text _questRequestText;
+        //[SerializeField] private TMP_Text _myRequestAchieveText;
 
         [SerializeField] private Button _requestAchieveButton;
         [SerializeField] private TMP_Text _isAchieveText;
@@ -41,17 +41,18 @@ namespace InGameScene.UI
 
             switch (_questItemInfo.QuestRepeatType)
             {
+                //TODO: QuestType에 따른 Toggle Event
                 case QuestRepeatType.Day:
-                    _questReqeatTypeText.text = "일일";
+                    //_questReqeatTypeText.text = "일일";
                     break;
                 case QuestRepeatType.Week:
-                    _questReqeatTypeText.text = "주간";
+                    //_questReqeatTypeText.text = "주간";
                     break;
                 case QuestRepeatType.Month:
-                    _questReqeatTypeText.text = "월간";
+                    //_questReqeatTypeText.text = "월간";
                     break;
                 case QuestRepeatType.Once:
-                    _questReqeatTypeText.text = "업적";
+                    //_questReqeatTypeText.text = "업적";
                     break;
             }
 
@@ -106,8 +107,8 @@ namespace InGameScene.UI
             }
 
             _questRewardText.text = rewardString.ToString();
-            _questRequestText.text = _questItemInfo.RequestCount.ToString();
-            _myRequestAchieveText.text = 0.ToString();
+            //_questRequestText.text = _questItemInfo.RequestCount.ToString();
+            //_myRequestAchieveText.text = 0.ToString();
 
             //보상 달성 시 지급하는 Achieve 함수 연결
             _requestAchieveButton.onClick.AddListener(Achieve);
@@ -143,7 +144,7 @@ namespace InGameScene.UI
             }
 
             // 현재 진행중인 횟수
-            _myRequestAchieveText.text = count.ToString();
+            //_myRequestAchieveText.text = count.ToString();
         }
 
 

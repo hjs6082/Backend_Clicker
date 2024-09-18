@@ -15,6 +15,8 @@ namespace InGameScene.UI
         // 무기 상점 아이템 생성
         public override void Init()
         {
+            UpdateUI();
+
             foreach (var weapon in StaticManager.Backend.Chart.Weapon.Dictionary)
             {
                 Sprite sprite = weapon.Value.WeaponSprite;
@@ -23,7 +25,7 @@ namespace InGameScene.UI
                 newWeapon.transform.localPosition = new Vector3(0, 0, 0);
                 newWeapon.transform.localScale = new Vector3(1, 1, 1);
 
-                newWeapon.GetComponent<InGameUI_UpgradeItem>().Init(sprite, weapon.Value);
+                newWeapon.GetComponent<InGameUI_UpgradeItem>().Init(sprite, weapon.Value, UpdateUI);
             }
         }
     }

@@ -15,8 +15,10 @@ namespace InGameScene.UI
         [SerializeField] private TMP_Text _NickNameText;
         [SerializeField] private Slider _ExpSlider;
 
+        [SerializeField] private Image _playerIcon;
         [SerializeField] private TMP_Text _levelText;
         [SerializeField] private TMP_Text _moneyText;
+        [SerializeField] private TMP_Text _gemText;
 
         public void Init()
         {
@@ -33,6 +35,20 @@ namespace InGameScene.UI
 
             _levelText.text = "Lv." + StaticManager.Backend.GameData.UserData.Level.ToString();
             _moneyText.text = StaticManager.Backend.GameData.UserData.Money.ToString();
+            _gemText.text = StaticManager.Backend.GameData.UserData.Gem.ToString();
+
+            int playerIcon = StaticManager.Backend.GameData.UserData.PlayerIcon;
+
+            if (playerIcon <= 9)
+            {
+                _playerIcon.sprite = Resources.Load<Sprite>("Images/PlayerIcon/Icon_0" + playerIcon);
+            }
+            else
+            {
+                _playerIcon.sprite = Resources.Load<Sprite>("Images/PlayerIcon/Icon_" + playerIcon);
+            }
+
+            //_playerIcon.sprite = Resources.Load<Sprite>("Images/PlayerIcon/Icon_" + StaticManager.Backend.GameData.UserData.PlayerIcon);
         }
     }
 

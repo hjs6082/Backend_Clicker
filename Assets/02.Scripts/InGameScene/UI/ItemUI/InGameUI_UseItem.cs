@@ -35,9 +35,12 @@ namespace InGameScene.UI
 
         public void UpdateCount(int count)
         {
-            if (count <= 0)
+            int.TryParse(_itemCountText.text, out int itemCount);
+            if (itemCount > 0)
             {
-                _itemCountText.text = count.ToString();
+                itemCount += count;
+                _itemCountText.text = itemCount.ToString();
+
                 //_inventory.DeleteUseItem(_itemID);
             }
             else
@@ -48,8 +51,14 @@ namespace InGameScene.UI
 
         private void UseItem()
         {
+            int.TryParse(_itemCountText.text, out int itemCount);
+            if (itemCount == 0)
+            {
+                StaticManager.UI.AlertUI.OpenAlertUI("아이템 부족", "사용할 아이템의 수량이 부족합니다.");
+                return;
+            }
             InGameScene.Managers.Item.Use(_itemID);
-            UpdateCount(StaticManager.Backend.GameData.ItemInventory.Dictionary[_itemID]);
+            _itemCountText.text = StaticManager.Backend.GameData.ItemInventory.Dictionary[_itemID].ToString();
         }
     }
 }

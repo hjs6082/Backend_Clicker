@@ -14,6 +14,7 @@ using Debug = UnityEngine.Debug;
 
 
 public class BackendManager : MonoBehaviour {
+
     // 1. 로그인씬에서 초기화 진행
     // 2. 로딩씬에서 조회 후 캐싱
     // 3. 인게임씬에서 캐싱된 데이터로 사용 및 주기적인 로직으로 갱신
@@ -27,9 +28,7 @@ public class BackendManager : MonoBehaviour {
         public readonly BackendData.Chart.Quest.Manager Quest = new(); // 퀘스트 차트
         public readonly BackendData.Chart.Weapon.Manager Weapon = new(); // Weapon 차트
         public readonly BackendData.Chart.Item.Manager Item = new(); // 아이템 차트
-        /*public readonly BackendData.Chart.Enemy.Manager Enemy = new(); // enemyChart 차트
-        public readonly BackendData.Chart.Shop.Manager Shop = new(); // 샵 차트
-        */
+        //public readonly BackendData.Chart.Shop.Manager Shop = new(); // 샵 차트
     }
 
     // 게임 정보 관리 데이터만 모아놓은 클래스
@@ -61,10 +60,9 @@ public class BackendManager : MonoBehaviour {
 
     private bool _isErrorOccured = false; // 치명적인 에러 발생 여부 
 
-    
     // 뒤끝 매니저 초기화 함수
     public void Init() {
-        var initializeBro = Backend.Initialize(true);
+        var initializeBro = Backend.Initialize();
 
         // 초기화 성공시
         if (initializeBro.IsSuccess()) {
@@ -80,15 +78,20 @@ public class BackendManager : MonoBehaviour {
 
     //비동기 함수를 메인쓰레드로 보내어 UI에 용이하게 접근하도록 도와주는 Poll 함수
     void Update() {
-        if (Backend.IsInitialized) {
+/*        if (Backend.IsInitialized) {
             Backend.AsyncPoll();
             Backend.ErrorHandler.Poll();
+        }*/
+
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            UpdateAllGameData(null);
         }
     }
 
     // 모든 뒤끝 함수에서 에러 발생 시, 각 에러에 따라 호출해주는 핸들러
     private void SetErrorHandler() {
-        Backend.ErrorHandler.InitializePoll(true);
+        //Backend.ErrorHandler.InitializePoll(true);
 
         // 서버 점검 에러 발생 시
         Backend.ErrorHandler.OnMaintenanceError = () => {

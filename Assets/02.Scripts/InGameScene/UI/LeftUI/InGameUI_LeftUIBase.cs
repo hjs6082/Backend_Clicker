@@ -9,12 +9,18 @@ namespace InGameScene.UI
     //===========================================================
     public class InGameUI_LeftUIBase : MonoBehaviour
     {
+        [SerializeField] private InGameUI_Status _status;
         public virtual void Init()
         {
         }
 
         public virtual void Open()
         {
+        }
+
+        public void UpdateUI()
+        {
+            _status.UpdateUI();
         }
     }
 }

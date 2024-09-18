@@ -69,12 +69,13 @@ namespace InGameScene.UI
         // 버튼을 누를경우 해당 UI로 변경
         void ChangeUI(int index)
         {
+            Debug.Log("현재 활성화 UI" + index);
             try
             {
                 if (!_bottomUIPanel.activeSelf)
                 {
                     _bottomUIPanel.SetActive(true);
-                    _UIChangeButtonParentObject.transform.SetParent(_bottomUIPanel.transform);
+                    //_UIChangeButtonParentObject.transform.SetParent(_bottomUIPanel.transform);
                 }
 
                 for (int i = 0; i < _leftUIButtons.Length; i++)
@@ -111,7 +112,7 @@ namespace InGameScene.UI
         public void CloseUI()
         {
             _bottomUIPanel.SetActive(false);
-            _UIChangeButtonParentObject.transform.SetParent(this.gameObject.transform);
+            //_UIChangeButtonParentObject.transform.SetParent(this.gameObject.transform);
         }
     }
 }

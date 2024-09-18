@@ -23,6 +23,7 @@ namespace InGameScene.UI
 
         public override void Init()
         {
+
             // 퀘스트 차트에 있는 모든 정보 불러와 생성
             foreach (var questItem in StaticManager.Backend.Chart.Quest.Dictionary)
             {
@@ -130,5 +131,196 @@ namespace InGameScene.UI
                 list.CheckItem(requestItemType, itemId);
             }
         }
+
+        #region 수정할 부분
+        /*[SerializeField] private GameObject _QuestParentObject;
+        [SerializeField] private GameObject _questItemPrefab;
+
+        [SerializeField] private Transform _buttonParentTransform;
+
+        // 퀘스트 아이템 리스트(key값은 questId)
+        private Dictionary<int, InGameUI_QuestItem> _questItemDic = new();
+
+        // 퀘스트 유형별 아이템 리스트(key값은 questType)
+        private Dictionary<int, List<InGameUI_QuestItem>> _questItemDicByQuestType = new();
+
+        private Dictionary<QuestRepeatType, List<InGameUI_QuestItem>> _questItemDicByRepeatType = new Dictionary<QuestRepeatType, List<InGameUI_QuestItem>>();
+
+        public override void Init()
+        {
+            // 퀘스트 차트에 있는 모든 정보 불러와 생성
+            foreach (var questItem in StaticManager.Backend.Chart.Quest.Dictionary)
+            {
+                var newQuestItem = Instantiate(_questItemPrefab, _QuestParentObject.transform, true);
+                newQuestItem.transform.localPosition = Vector3.zero;
+                newQuestItem.transform.localScale = Vector3.one;
+
+                var useItem = newQuestItem.GetComponent<InGameUI_QuestItem>();
+                useItem.Init(questItem.Value);
+                _questItemDic.Add(questItem.Value.QuestID, useItem);
+
+                // 퀘스트 반복 타입에 따른 분류
+                QuestRepeatType repeatType = questItem.Value.QuestRepeatType;
+
+                // 해당 퀘스트 타입이 있으면 삽입, 없으면 새로 생성
+                if (!_questItemDicByRepeatType.ContainsKey(repeatType))
+                {
+                    _questItemDicByRepeatType.Add(repeatType, new List<InGameUI_QuestItem>());
+                }
+
+                _questItemDicByRepeatType[repeatType].Add(useItem);
+            }
+
+            // 버튼 초기화 및 연결
+            InitializeButtons();
+
+            // 처음엔 Day 버튼이 눌려있는 상태로 시작
+            UpdateQuestUI(QuestRepeatType.Day);
+        }
+
+        private void InitializeButtons()
+        {
+            // 버튼들을 Enum 순서대로 가져와 이벤트 연결
+            for (int i = 0; i < _buttonParentTransform.childCount; i++)
+            {
+                UnityEngine.UI.Button button = _buttonParentTransform.GetChild(i).GetComponent<UnityEngine.UI.Button>();
+
+                QuestRepeatType repeatType = (QuestRepeatType)i; // Enum 순서대로 매칭
+                button.onClick.AddListener(() => UpdateQuestUI(repeatType));
+            }
+        }
+
+        // 퀘스트 타입에 따른 UI 업데이트 함수
+        public void UpdateQuestUI(QuestRepeatType repeatType)
+        {
+            // 모든 퀘스트 아이템을 비활성화 대신 숨김 처리
+            foreach (var questItemList in _questItemDicByRepeatType.Values)
+            {
+                foreach (var questItem in questItemList)
+                {
+                    // CanvasGroup을 이용해 UI를 숨김
+                    var canvasGroup = questItem.GetComponent<CanvasGroup>();
+                    if (canvasGroup != null)
+                    {
+                        canvasGroup.alpha = 0; // 안 보이게 처리
+                        canvasGroup.blocksRaycasts = false; // 클릭 등 이벤트 막기
+                    }
+                }
+            }
+
+            // 선택된 타입의 퀘스트들만 활성화 (보이게 설정)
+            if (_questItemDicByRepeatType.ContainsKey(repeatType))
+            {
+                foreach (var questItem in _questItemDicByRepeatType[repeatType])
+                {
+                    var canvasGroup = questItem.GetComponent<CanvasGroup>();
+                    if (canvasGroup != null)
+                    {
+                        canvasGroup.alpha = 1; // 다시 보이게 처리
+                        canvasGroup.blocksRaycasts = true; // 클릭 등 이벤트 허용
+                    }
+                }
+            }
+        }
+
+
+        // 각 퀘스트 타입별 업데이트하는 함수
+        public void UpdateUI(QuestType questType)
+        {
+            if (!_questItemDicByQuestType.ContainsKey((int)questType))
+            {
+                Debug.LogError($"QuestType {questType}에 해당하는 데이터가 없습니다.");
+                return;
+            }
+
+            switch (questType)
+            {
+                case QuestType.LevelUp:
+                    foreach (var list in _questItemDicByQuestType[(int)questType])
+                    {
+                        if (list != null) // list가 비활성화 되어 있어도 null 체크
+                        {
+                            list.UpdateUI(StaticManager.Backend.GameData.UserData.Level);
+                        }
+                    }
+                    break;
+
+                case QuestType.UseGold:
+                    foreach (var list in _questItemDicByQuestType[(int)questType])
+                    {
+                        if (list != null)
+                        {
+                            if (list.GetRepeatType() == QuestRepeatType.Day)
+                            {
+                                list.UpdateUI(StaticManager.Backend.GameData.UserData.DayUsingGold);
+                            }
+                            else if (list.GetRepeatType() == QuestRepeatType.Week)
+                            {
+                                list.UpdateUI(StaticManager.Backend.GameData.UserData.WeekUsingGold);
+                            }
+                            else if (list.GetRepeatType() == QuestRepeatType.Month)
+                            {
+                                list.UpdateUI(StaticManager.Backend.GameData.UserData.MonthUsingGold);
+                            }
+                            else
+                            {
+                                throw new Exception("확인되지 않은 에러입니다.");
+                            }
+                        }
+                    }
+                    break;
+
+                case QuestType.DefeatEnemy:
+                    foreach (var list in _questItemDicByQuestType[(int)questType])
+                    {
+                        if (list != null)
+                        {
+                            if (list.GetRepeatType() == QuestRepeatType.Day)
+                            {
+                                list.UpdateUI(StaticManager.Backend.GameData.UserData.DayDefeatEnemyCount);
+                            }
+                            else if (list.GetRepeatType() == QuestRepeatType.Week)
+                            {
+                                list.UpdateUI(StaticManager.Backend.GameData.UserData.WeekDefeatEnemyCount);
+                            }
+                            else if (list.GetRepeatType() == QuestRepeatType.Month)
+                            {
+                                list.UpdateUI(StaticManager.Backend.GameData.UserData.MonthDefeatEnemyCount);
+                            }
+                            else
+                            {
+                                throw new Exception("확인되지 않은 에러입니다.");
+                            }
+                        }
+                    }
+                    break;
+
+                case QuestType.GetItem:
+                    foreach (var list in _questItemDicByQuestType[(int)questType])
+                    {
+                        if (list != null)
+                        {
+                            list.UpdateUI(0);
+                        }
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(questType), questType, null);
+            }
+        }
+
+
+        // 아이템, 무기의 경우 각 아이템에서 해당 함수 호출하여 아이템이 존재하는지 확인하고 달성 체크
+        public void UpdateUIForGetItem(RequestItemType requestItemType, int itemId)
+        {
+            Debug.Log("실행되었습니다.");
+            foreach (var list in _questItemDicByQuestType[(int)QuestType.GetItem])
+            {
+                list.CheckItem(requestItemType, itemId);
+            }
+        }
+    }*/
+        #endregion
     }
 }

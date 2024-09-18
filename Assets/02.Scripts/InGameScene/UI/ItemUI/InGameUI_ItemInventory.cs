@@ -14,21 +14,34 @@ namespace InGameScene.UI
             foreach (var useItemButton in _useItemButtons)
             {
                 int itemID = useItemButton.ItemID;
-                if (StaticManager.Backend.GameData.ItemInventory.Dictionary.ContainsKey(itemID))
+                foreach (var item in StaticManager.Backend.Chart.Item.Dictionary.Values)
                 {
-                    int itemCount = StaticManager.Backend.GameData.ItemInventory.Dictionary[itemID];
-                    useItemButton.Init(this, itemID, itemCount);
-                    _useItemDic[itemID] = useItemButton;
+                    if (item.ItemID == itemID)
+                    {
+                        int itemCount;
+                        if (StaticManager.Backend.GameData.ItemInventory.Dictionary.ContainsKey(itemID))
+                        {
+                            itemCount = StaticManager.Backend.GameData.ItemInventory.Dictionary[itemID];
+                        }
+                        else
+                        {
+                            itemCount = 0;
+                        }
+                        useItemButton.Init(this, itemID, itemCount);
+                        _useItemDic[itemID] = useItemButton;
+                    }
                 }
+
+
                 /*                else
                                 {
                                     useItemButton.gameObject.SetActive(false);
                                 }*/
 
-                foreach (var item in StaticManager.Backend.GameData.ItemInventory.Dictionary.Keys)
-                {
-                    Debug.Log("아이템 키는 : " + item);
-                }
+                /*                foreach (var item in StaticManager.Backend.GameData.ItemInventory.Dictionary.Keys)
+                                {
+                                    Debug.Log("아이템 키는 : " + item);
+                                }*/
             }
         }
 

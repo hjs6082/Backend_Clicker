@@ -33,10 +33,10 @@ namespace InGameScene.UI
             GameObject button = _rankUUIDSelectButtonGroup.GetComponentInChildren<Button>().gameObject;
 
             // 랭킹 갯수만큼 버튼의 크기를 줄여 한줄로 보여줄 수 있도록 크기 조정
-            _rankUUIDSelectButtonGroup.GetComponent<GridLayoutGroup>().cellSize =
+/*            _rankUUIDSelectButtonGroup.GetComponent<GridLayoutGroup>().cellSize =
                 new Vector2(
                     _rankUUIDSelectButtonGroup.GetComponent<RectTransform>().sizeDelta.x /
-                    StaticManager.Backend.Rank.List.Count, 100);
+                    StaticManager.Backend.Rank.List.Count, 100);*/
 
             // 랭킹 갯수만큼 버튼 배열 할당
             selectedUUIDButtons = new Button[StaticManager.Backend.Rank.List.Count];

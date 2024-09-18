@@ -58,6 +58,49 @@ namespace InGameScene
             }
         }
 
+        // Gem과 관련된 UserData를 변경하는 함수
+        public void UpdateGem(int gem)
+        {
+            try
+            {
+/*                // 버프가 존재할 경우, 획득량 조정
+                if (money > 0)
+                {
+                    money = Managers.Buff.GetBuffedStat(Buff.BuffStatType.Gold, money);
+                }
+                if (exp > 0)
+                {
+                    exp = Managers.Buff.GetBuffedStat(Buff.BuffStatType.Exp, exp);
+                }*/
+
+                // 조정된 획득량만큼 GameData의 UserData 업데이트
+                StaticManager.Backend.GameData.UserData.UpdateGem(gem);
+
+                // 변경된 데이터에 맞게 UserUI 변경(우측 상단)
+                _uiManager.UserUI.UpdateUI();
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"UpdateGem({gem}}}) 중 에러가 발생하였습니다\n{e}");
+            }
+        }
+
+        // PlayerIcon과 관련된 UserData를 변경하는 함수
+        public void UpdatePlayerIcon(int playerIconNum)
+        {
+            try
+            {
+                StaticManager.Backend.GameData.UserData.UpdatePlayerIcon(playerIconNum);
+
+                // 변경된 데이터에 맞게 UserUI 변경(우측 상단)
+                _uiManager.UserUI.UpdateUI();
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"UpdatePlayerIcon({playerIconNum}}}) 중 에러가 발생하였습니다\n{e}");
+            }
+        }
+
         // 아이템 인벤토리 관련 데이터와 UI를 업데이트하는 함수
         public void UpdateItemInventory(int itemID, int count)
         {
