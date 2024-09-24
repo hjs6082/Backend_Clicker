@@ -15,7 +15,7 @@ namespace InGameScene.UI
         // 무기 상점 아이템 생성
         public override void Init()
         {
-            UpdateUI();
+            base.Init();
 
             foreach (var weapon in StaticManager.Backend.Chart.Weapon.Dictionary)
             {
@@ -27,6 +27,11 @@ namespace InGameScene.UI
 
                 newWeapon.GetComponent<InGameUI_UpgradeItem>().Init(sprite, weapon.Value, UpdateUI);
             }
+        }
+
+        public override void Open()
+        {
+            base.Open();
         }
     }
 }

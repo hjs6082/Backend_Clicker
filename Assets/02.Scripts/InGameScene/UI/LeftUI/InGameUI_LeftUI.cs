@@ -109,10 +109,5 @@ namespace InGameScene.UI
                     $"활성되지 않은 Bottom UI가 존재합니다.\n시도된 UI : {index}번\n전체 Bottom UI 개수 : {_bottomUIs.Length}\n\n{e}");
             }
         }
-        public void CloseUI()
-        {
-            _bottomUIPanel.SetActive(false);
-            //_UIChangeButtonParentObject.transform.SetParent(this.gameObject.transform);
-        }
     }
 }

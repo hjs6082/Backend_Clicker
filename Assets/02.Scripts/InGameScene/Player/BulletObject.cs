@@ -15,10 +15,9 @@ namespace InGameScene
         private float _atk = 0;
 
         // 방향과 스피드, 적에게 닿을 시 주는 데미지 지정(방향은 각도로)
-        public void Shoot(Sprite bulletSprite, Quaternion destinationTransform, float speed, float atk)
+        public void Shoot(Quaternion destinationTransform, float speed, float atk)
         {
-            gameObject.GetComponent<SpriteRenderer>().sprite = bulletSprite;
-            gameObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            gameObject.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
             transform.rotation = destinationTransform;
             _speed = speed;
             _atk = atk;

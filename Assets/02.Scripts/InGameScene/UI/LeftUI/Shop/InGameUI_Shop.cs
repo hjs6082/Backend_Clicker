@@ -13,10 +13,10 @@ namespace InGameScene.UI
         [SerializeField]
         private List<InGameUI_ShopItem> shopItemList;
 
-
-
         public override void Init()
         {
+            base.Init();
+
             shopItemList.AddRange(GetComponentsInChildren<InGameUI_ShopItem>());
 
             foreach (var item in shopItemList)
@@ -27,7 +27,11 @@ namespace InGameScene.UI
 
             // 팝업의 버튼 이벤트 초기화
             buyPopup.Init(OnConfirmPurchase, OnCancelPurchase);
-            UpdateUI();
+        }
+
+        public override void Open()
+        {
+            base.Open();
         }
 
         // 팝업 띄우기

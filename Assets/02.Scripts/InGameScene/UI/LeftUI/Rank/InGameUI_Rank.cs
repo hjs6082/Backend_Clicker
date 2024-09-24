@@ -29,6 +29,8 @@ namespace InGameScene.UI
         //try catch는 RightButtonGroupManager에서 관리
         public override void Init()
         {
+            base.Init();
+
             // UI에 있는 랭킹 이름의 버튼 객체 가져오기
             GameObject button = _rankUUIDSelectButtonGroup.GetComponentInChildren<Button>().gameObject;
 
@@ -78,14 +80,16 @@ namespace InGameScene.UI
 
         public override void Open()
         {
+            base.Open();
+
             ChangeButton(0);
         }
 
         //보여줄 랭킹 uuid를 설정하는 함수
         private void ChangeButton(int selectNum)
         {
-            selectedUUIDButtons[selectedUUIDNum].GetComponent<Image>().color = Color.white;
-            selectedUUIDButtons[selectNum].GetComponent<Image>().color = Color.gray;
+            selectedUUIDButtons[selectedUUIDNum].GetComponent<TMP_Text>().color = Color.white;
+            selectedUUIDButtons[selectNum].GetComponent<TMP_Text>().color = Color.gray;
 
             selectedUUIDNum = selectNum;
 

@@ -33,7 +33,6 @@ namespace BackendData.Chart.Enemy
         public float Money { get; private set; }
         public List<DropItem> DropItemList { get; private set; }
         public string Image { get; private set; }
-        public Sprite EnemySprite;
 
         public Item(JsonData json)
         {

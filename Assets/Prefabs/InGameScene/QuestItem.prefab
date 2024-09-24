@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 3938943503053282895}
   - component: {fileID: 4862724407110185623}
   m_Layer: 5
-  m_Name: Icon_Gold
+  m_Name: Reward_Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1030,6 +1030,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _questContentText: {fileID: 7690101771910806930}
   _questRewardText: {fileID: 2597018531832813053}
+  _questRewardImage: {fileID: 4862724407110185623}
   _requestAchieveButton: {fileID: 7417687748687615350}
   _isAchieveText: {fileID: 9104462924440271733}
 --- !u!1 &8820687942208995630
