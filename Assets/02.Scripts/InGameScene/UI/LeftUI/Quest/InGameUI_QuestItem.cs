@@ -18,11 +18,14 @@ namespace InGameScene.UI
         //[SerializeField] private TMP_Text _questReqeatTypeText;
         [SerializeField] private TMP_Text _questContentText;
         [SerializeField] private TMP_Text _questRewardText;
+        [SerializeField] private Image _questRewardImage;
         //[SerializeField] private TMP_Text _questRequestText;
         //[SerializeField] private TMP_Text _myRequestAchieveText;
 
         [SerializeField] private Button _requestAchieveButton;
         [SerializeField] private TMP_Text _isAchieveText;
+
+        private string iconPath = "Images/Icon/Icon_";
 
         private Item _questItemInfo;
 
@@ -66,11 +69,13 @@ namespace InGameScene.UI
                     // exp가 보상일 경우
                     if (item.Exp > 0)
                     {
+                        _questRewardImage.sprite = Resources.Load<Sprite>(iconPath + "Exp");
                         _rewardList.Add($"{item.Exp} Exp");
                     }
                     // money가 보상일 경우
                     if (item.Money > 0)
                     {
+                        _questRewardImage.sprite = Resources.Load<Sprite>(iconPath + "Gold");
                         _rewardList.Add($"{item.Money} Gold");
                     }
                 }
@@ -84,9 +89,11 @@ namespace InGameScene.UI
                     switch (item.RewardItemType)
                     {
                         case RewardItemType.Item: // 보상이 아이템일 경우 아이템 이름
+                            _questRewardImage.sprite = StaticManager.Backend.Chart.Item.Dictionary[item.Id].ImageSprite;
                             _rewardList.Add(StaticManager.Backend.Chart.Item.Dictionary[item.Id].ItemName);
                             break;
                         case RewardItemType.Weapon:// 보상이 무기일 경우 무기 이름
+                            _questRewardImage.sprite = StaticManager.Backend.Chart.Weapon.Dictionary[item.Id].WeaponSprite;
                             _rewardList.Add(StaticManager.Backend.Chart.Weapon.Dictionary[item.Id].WeaponName);
                             break;
                     }
@@ -106,6 +113,8 @@ namespace InGameScene.UI
                 rewardString.Append(_rewardList[i]);
             }
 
+            if(_rewardList.Count > 1)
+                _questRewardImage.sprite = _questRewardImage.sprite = Resources.Load<Sprite>(iconPath + "Pack");
             _questRewardText.text = rewardString.ToString();
             //_questRequestText.text = _questItemInfo.RequestCount.ToString();
             //_myRequestAchieveText.text = 0.ToString();

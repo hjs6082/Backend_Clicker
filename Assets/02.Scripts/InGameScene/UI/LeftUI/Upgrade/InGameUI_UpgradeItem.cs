@@ -39,7 +39,7 @@ namespace InGameScene.UI
             stat += $"공격력 : +{weaponInfo.Atk}\n";
             _weaponAtk.text = stat;
 
-            _weaponPrice.text = weaponInfo.Price.ToString();
+            _weaponPrice.text = "가격 : " + weaponInfo.Price.ToString();
 
             _weaponBuyButton.onClick.AddListener(BuyButton);
 
@@ -107,6 +107,8 @@ namespace InGameScene.UI
                 {
                     if (item2.WeaponChartId == _weaponInfo.WeaponID)
                     {
+                        Debug.Log("기존 아이디 : " + item);
+                        Debug.Log("바꿀 아이디 : " + item2.MyWeaponId);
                         InGameScene.Managers.Game.UpdateWeaponEquip(item, item2.MyWeaponId);
                         StaticManager.UI.AlertUI.OpenAlertUI("착용 완료", _weaponInfo.WeaponName + "이(가) 착용되었습니다.");
                         Equip();

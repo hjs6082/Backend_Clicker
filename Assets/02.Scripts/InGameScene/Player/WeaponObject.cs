@@ -121,7 +121,7 @@ namespace InGameScene
 
             // ÃÑ¾Ë ¹ß»ç
             var bullet = Instantiate(_bulletObject);
-            bullet.GetComponent<BulletObject>().Shoot(_bulletImageSprite, _gunSpriteTransform.rotation, speed, normalAtk);
+            bullet.GetComponent<BulletObject>().Shoot(_gunSpriteTransform.rotation, speed, normalAtk);
             bullet.transform.position = _gunSpriteTransform.position;
         }
     }

@@ -23,6 +23,7 @@ namespace InGameScene.UI
 
         public override void Init()
         {
+            base.Init();
 
             // 퀘스트 차트에 있는 모든 정보 불러와 생성
             foreach (var questItem in StaticManager.Backend.Chart.Quest.Dictionary)
@@ -53,6 +54,11 @@ namespace InGameScene.UI
             {
                 UpdateUI((QuestType)i);
             }
+        }
+
+        public override void Open()
+        {
+            base.Open();
         }
 
         // 각 퀘스트 타입별 업데이트하는 함수

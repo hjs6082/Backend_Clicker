@@ -19,10 +19,13 @@ namespace InGameScene.UI
 
         public override void Init()
         {
+            base.Init();
         }
 
         public override void Open()
         {
+            base.Open();
+
             StaticManager.UI.SetLoadingIcon(true);
 
             // 우편함에 우편이 없을 경우 텍스트 출력
