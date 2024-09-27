@@ -3,6 +3,8 @@
 using BackEnd;
 using UnityEngine;
 using UnityEngine.UI;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 
 public class LoginSceneManager : MonoBehaviour
 {
@@ -45,6 +47,8 @@ public class LoginSceneManager : MonoBehaviour
             var obj = Resources.Load<GameObject>("Prefabs/StaticManager");
             Instantiate(obj);
         }
+
+        PlayGamesPlatform.Activate();
     }
 
     void Start()
@@ -85,7 +89,7 @@ public class LoginSceneManager : MonoBehaviour
         buttons[2].onClick.AddListener(GuestLogin);
 
         // 페데레이션 로그인 기능 미구현
-        buttons[0].gameObject.SetActive(false);
+        //buttons[0].gameObject.SetActive(false);
 
     }
 
@@ -127,7 +131,58 @@ public class LoginSceneManager : MonoBehaviour
     }
     private void FederationLogin()
     {
+        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+    }
 
+    void ProcessAuthentication(SignInStatus status)
+    {
+        if (status == SignInStatus.Success)
+        {
+            GetAccessCode();
+            // Continue with Play Games Services
+        }
+        else
+        {
+            // Disable your integration with Play Games Services or show a login button
+            // to ask users to sign-in. Clicking it should call
+            // PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication).
+        }
+    }
+
+    public void GetAccessCode()
+    {
+        PlayGamesPlatform.Instance.RequestServerSideAccess(
+          /* forceRefreshToken= */ false,
+          code => {
+              Debug.Log("구글 인증 코드 : " + code);
+
+              Backend.BMember.GetGPGS2AccessToken(code, googleCallback =>
+              {
+                  Debug.Log("GetGPGS2AccessToken 함수 호출 결과 " + googleCallback);
+
+                  string accessToken = "";
+
+                  if (googleCallback.IsSuccess())
+                  {
+                      accessToken = googleCallback.GetReturnValuetoJSON()["access_token"].ToString();
+                  }
+
+                  Backend.BMember.AuthorizeFederation(accessToken, FederationType.GPGS2, callback =>
+                  {
+                      Debug.Log("뒤끝 로그인 성공했습니다. " + callback);
+
+                      if (string.IsNullOrEmpty(Backend.UserNickName))
+                      {
+                          StaticManager.UI.OpenUI<LoginUI_Nickname>("Prefabs/LoginScene/UI", GetLoginUICanvas().transform);
+                      }
+                      else
+                      {
+                          GoNextScene();
+                      }
+                      //GoNextScene();
+                  });
+              });
+          });
     }
 
     // 로그인 함수 후 처리 함수
