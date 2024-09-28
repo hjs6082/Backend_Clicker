@@ -83,5 +83,17 @@ namespace InGameScene.UI
             // 팝업 비활성화
             buyPopup.Hide();
         }
+
+        public void OnFailedPurchase()
+        {
+            StaticManager.UI.AlertUI.OpenAlertUI("구매 취소", "구매가 취소되었습니다.");
+        }
+
+        public void OnCompletePurchase(int gem)
+        {
+            InGameScene.Managers.Game.UpdateGem(gem);
+            StaticManager.UI.AlertUI.OpenAlertUI("구매 완료", "Gem " + gem + "이(가) 지급되었습니다.");
+            UpdateUI();
+        }
     }
 }

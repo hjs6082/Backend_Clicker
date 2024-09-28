@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/00.Scenes/New_InGameScene.unity
     guid: 8e5ea5d8c8196a54794b39c2b5129edf
+  - enabled: 1
+    path: Assets/00.Scenes/New_InGameScene_Backup_09.18.unity
+    guid: 2b78c5d2488d64a4d98c50b76a3e7907
   m_configObjects: {}
