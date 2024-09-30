@@ -115,8 +115,8 @@ namespace InGameScene
         // 생성된 적은 화면 밖에서 enemy객체의 생성 함수로 인해 화면 안으로 이동한다.
         private void CreateEnemy(BackendData.Chart.Stage.Item.EnemyInfo stageEnemyInfo)
         {
-            Vector3 enemyRespawnPosition = new Vector3(12.56f, 0f, 0);
-            Vector3 enemyStayPosition = new Vector3(5.7f, 0f, 0);
+            Vector3 enemyRespawnPosition = new Vector3(11.39f, -0.91f, 0);
+            Vector3 enemyStayPosition = new Vector3(6.48f, -0.91f, 0);
 
             // 적 차트정보에서 데이터 불러오기
             BackendData.Chart.Enemy.Item enemyInfo =
@@ -163,7 +163,16 @@ namespace InGameScene
                     _uiManager.EnemyUI.SetCurrentHp(enemyItem.Hp);
                     break;
                 case EnemyObject.EnemyState.Dead:
-                    Managers.Game.UpdateUserData(enemyItem.Money, enemyItem.Exp);
+                    float moneyToAdd = enemyItem.Money;
+
+                    // Money 버프가 활성화되어 있는지 확인
+                    if (Managers.Buff.IsBuffActive(Buff.BuffStatType.Gold))
+                    {
+                        moneyToAdd *= 2; // 돈을 두 배로 증가
+                    }
+
+                    Managers.Game.UpdateUserData(moneyToAdd, enemyItem.Exp);
+
                     StaticManager.Backend.GameData.UserData.CountDefeatEnemy();
                     _uiManager.LeftUI.GetUI<InGameUI_Quest>().UpdateUI(BackendData.Chart.Quest.QuestType.DefeatEnemy);
                     _player.SetNewEnemy(null);

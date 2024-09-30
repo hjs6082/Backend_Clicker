@@ -1,10 +1,7 @@
-// Copyright 2013-2022 AFI, INC. All rights reserved.
-
 using System;
 using System.Collections;
 using UnityEngine;
-
-using static InGameScene.Buff;
+using TMPro;
 
 namespace InGameScene
 {
@@ -13,15 +10,13 @@ namespace InGameScene
     //===============================================================
     public class BuffManager : MonoBehaviour
     {
-
-        // 버프 배열
         private Buff[] _buffArray;
         private WaitForSeconds _buffCountSeconds = new WaitForSeconds(1);
+        [SerializeField] private TMP_Text remainingTimeText; // UI 텍스트 요소
 
         public void Init()
         {
-            // 버프의 종류만큼 버프 배열 할당
-            int buffTypeCount = Enum.GetValues(typeof(BuffStatType)).Length;
+            int buffTypeCount = Enum.GetValues(typeof(Buff.BuffStatType)).Length;
             _buffArray = new Buff[buffTypeCount];
 
             for (int i = 0; i < buffTypeCount; i++)
@@ -30,63 +25,75 @@ namespace InGameScene
             }
         }
 
-        public bool StartBuff(BuffStatType buffStatType, float stat, float time,
-            BuffAdditionType buffAdditionType)
+        public bool StartBuff(Buff.BuffStatType buffStatType, float stat, float time,
+            Buff.BuffAdditionType buffAdditionType)
         {
-
-            // 버프 시작
             int buffCase = (int)buffStatType;
 
-            float remainTime = _buffArray[buffCase].Time;
-
-            if (remainTime > 0)
+            if (_buffArray[buffCase].Time > 0)
             {
-                StaticManager.UI.AlertUI.OpenWarningUI("사용불가 안내", $"아직 사용중입니다.\n남은시간 : {remainTime}");
+                // 이미 활성화된 버프
                 return false;
             }
 
             _buffArray[buffCase].UpdateBuff(stat, time, buffAdditionType);
             StartCoroutine(StartBuffCoroutine(_buffArray[buffCase]));
+            remainingTimeText.gameObject.SetActive(true);
             return true;
         }
 
-        // 1초마다 반복하면서 시간을 계산하는 코루틴함수.
         IEnumerator StartBuffCoroutine(Buff buff)
         {
             while (buff.Time > 0)
             {
+                UpdateRemainingTimeText(buff.Time); // 남은 시간 업데이트
                 yield return _buffCountSeconds;
                 buff.Time -= 1;
             }
 
             buff.TurnOffBuff();
+            UpdateRemainingTimeText(0); // 시간이 끝났을 때 UI 텍스트 초기화
         }
 
-        // 기본  스텟에서 버프된 스텟만큼 계산하여 리턴하는 함수.
-        public float GetBuffedStat(BuffStatType buffStateType, float originalStat)
+        private void UpdateRemainingTimeText(float time)
         {
-            try
-            {
-                if (_buffArray[(int)buffStateType].IsBuffing == false)
-                {
-                    return originalStat;
-                }
+            if (time <= 0)
+                remainingTimeText.gameObject.SetActive(false);
+            remainingTimeText.text = $"버프 남은 시간: {time}초"; // UI 텍스트 업데이트
+        }
 
-                // 버프 형태가 증감일 경우 그냥 더하기, 뺴기
-                if (_buffArray[(int)buffStateType].BuffAddition == BuffAdditionType.Plus)
-                {
-                    return originalStat + _buffArray[(int)buffStateType].Stat;
-                }
-                else
-                {
-                    // 곱셈일 경우, 곱하기
-                    return originalStat * _buffArray[(int)buffStateType].Stat;
-                }
-            }
-            catch (Exception e)
+        public float GetBuffedStat(Buff.BuffStatType buffStatType, float originalStat)
+        {
+            if (!_buffArray[(int)buffStatType].IsBuffing)
             {
-                throw new Exception($"GetBuffedStat {buffStateType} {originalStat} 에러\n" + e.ToString());
+                return originalStat;
             }
+
+            if (_buffArray[(int)buffStatType].BuffAddition == Buff.BuffAdditionType.Plus)
+            {
+                return originalStat + _buffArray[(int)buffStatType].Stat;
+            }
+            else
+            {
+                return originalStat * _buffArray[(int)buffStatType].Stat;
+            }
+        }
+
+        public bool IsBuffActive(Buff.BuffStatType buffStatType)
+        {
+            return _buffArray[(int)buffStatType].IsBuffing;
+        }
+
+        public bool IsAnyBuffActive()
+        {
+            foreach (var buff in _buffArray)
+            {
+                if (buff.IsBuffing)
+                {
+                    return true; // 활성화된 버프가 하나라도 있음
+                }
+            }
+            return false; // 모든 버프가 비활성화됨
         }
     }
 }

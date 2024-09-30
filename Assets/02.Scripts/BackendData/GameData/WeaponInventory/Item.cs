@@ -26,7 +26,8 @@ namespace BackendData.GameData.WeaponInventory
             {
                 Atk = weaponChartChart.Atk + (level * weaponChartChart.GrowingAtk);
                 Spd = weaponChartChart.Spd + (level * weaponChartChart.GrowingSpd);
-                Delay = weaponChartChart.Delay + (level * weaponChartChart.GrowingDelay);
+
+                Delay = weaponChartChart.Delay - (level * weaponChartChart.GrowingDelay);
                 UpgradePrice = weaponChartChart.Price;
             }
         }

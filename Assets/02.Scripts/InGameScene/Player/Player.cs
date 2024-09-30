@@ -31,7 +31,9 @@ namespace InGameScene
 
         private EnemyObject _enemy; // 지정중인 적
         private Transform _gunSpriteTransform; // 무기의 이미지 Transform
+        [SerializeField]
         private float _reloadingTime = 3; // 리로딩 시간
+        private float _shootTimeScale = 1f;
         private GameObject _bulletObject; // 발사할 총알 객체
         private float _currentTime = 0; // 다음 총알까지 시간
         private Sprite _bulletImageSprite;
@@ -56,10 +58,22 @@ namespace InGameScene
 
         void Update()
         {
+            if(Input.GetKeyDown(KeyCode.K))
+                Managers.Game.UpdateItemInventory(2, 1);
             // 이동 상태에 따른 처리
             if (_moveState != MoveState.None)
             {
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, _destination, _moveSpeed * Time.deltaTime);
+
+                // 이동 중일 때 애니메이션 설정
+                if (_moveState == MoveState.MoveToAttack)
+                {
+                    SetAnimation("Run ARCHER");
+                }
+                else if (_moveState == MoveState.MoveToNextStage)
+                {
+                    SetAnimation("Run ARCHER"); // 다른 이동 애니메이션 설정
+                }
 
                 if (transform.localPosition.Equals(_destination))
                 {
@@ -67,28 +81,32 @@ namespace InGameScene
 
                     if (_moveState == MoveState.MoveToNextStage)
                     {
-                        transform.localPosition = new Vector3(-4, 1.7f, 0);
+                        transform.localPosition = new Vector3(-15.25f, -0.98f, 0);
                     }
 
                     _moveState = MoveState.None;
+
+                    // 도착 후 애니메이션을 Idle로 변경
                     SetAnimation("Idle ARCHER");
                     _playerAfterMove = null;
                 }
             }
-
-            // 적이 지정되어 있을 경우 무기를 적 방향으로 회전시키고, 클릭 시 발사
-            if (_enemy != null)
-            {
-                RotateToEnemyUpdate();
-
-                // 주석 처리된 총알 발사 타이밍 계산
-                ShootUpdate();
-            }
             else
             {
-                SetAnimation("Idle ARCHER");
+                // 적이 지정되어 있을 경우 무기를 적 방향으로 회전시키고, 클릭 시 발사
+                if (_enemy != null)
+                {
+                    RotateToEnemyUpdate();
+                    ShootUpdate();
+                }
+                else
+                {
+                    // 적이 없고 이동 상태가 None일 때만 Idle 애니메이션 실행
+                    SetAnimation("Idle ARCHER");
+                }
             }
         }
+
 
         // 애니메이션 이벤트 발생 시 호출되는 함수
         void OnEventAnimation(TrackEntry trackEntry, Spine.Event e)
@@ -115,7 +133,25 @@ namespace InGameScene
         {
             float speed = _weaponData.GetCurrentWeaponStat().Spd;
             float normalAtk = Managers.Buff.GetBuffedStat(Buff.BuffStatType.Atk, _weaponData.GetCurrentWeaponStat().Atk);
+
+            // 리로딩 시간 설정
             _reloadingTime = Managers.Buff.GetBuffedStat(Buff.BuffStatType.Delay, _weaponData.GetCurrentWeaponStat().Delay);
+
+            if (Managers.Buff.IsBuffActive(Buff.BuffStatType.Delay))
+            {
+                _reloadingTime = 0.2f;
+            }
+
+            // Shoot1의 Duration에 맞게 timeScale 설정
+            float shootDuration = 1.733f; // 애니메이션 Duration
+            _shootTimeScale = (shootDuration / _reloadingTime) * 1.8f; // timeScale 계산
+
+            // timeScale이 1보다 작아지지 않도록 보정
+            if (_shootTimeScale < 1f)
+            {
+                _shootTimeScale = 1f; // 최소 1로 설정
+            }
+            _playerAnimator.timeScale = _shootTimeScale;
 
             var bullet = Instantiate(_bulletObject);
             bullet.GetComponent<BulletObject>().Shoot(_gunSpriteTransform.rotation, speed, normalAtk);
@@ -132,12 +168,12 @@ namespace InGameScene
                     SetAnimation("Idle ARCHER");
                     break;
                 case MoveState.MoveToAttack:
-                    SetAnimation("Run");
-                    _destination = new Vector3(-4.41f, 0f, 0);
+                    SetAnimation("Run ARCHER");
+                    _destination = new Vector3(-4.26f, -0.98f, 0);
                     break;
                 case MoveState.MoveToNextStage:
-                    SetAnimation("Run");
-                    _destination = new Vector3(-13.01f, 0f, 0);
+                    SetAnimation("Run ARCHER");
+                    _destination = new Vector3(14.22f, 0.98f, 0);
                     break;
             }
 
@@ -160,6 +196,7 @@ namespace InGameScene
                     var weaponInventory = weaponInventoryDic[myWeaponId];
                     ActiveGun(weaponInventory, _bulletGameObject);
                     _gearEquipper.Bow = weaponInventory.GetWeaponChartData().WeaponID - 1;
+                    _gearEquipper.ApplySkinChanges();
                 }
                 else
                 {
@@ -189,12 +226,24 @@ namespace InGameScene
             _gunSpriteTransform.rotation = targetRotation;
         }
 
+
+        // 애니메이션 설정 시 Shoot1 애니메이션에 대해 timeScale을 설정
         private void SetAnimation(string animationName)
         {
             if (_playerAnimator == null)
                 return;
 
             bool isLoop = animationName != "Dead";
+
+            if (animationName == "Shoot1")
+            {
+                _playerAnimator.timeScale = _shootTimeScale; // Shoot1 시 timeScale 적용
+            }
+            else
+            {
+                _playerAnimator.timeScale = 1f; // 그 외 애니메이션은 기본 속도
+            }
+
             _playerAnimator.AnimationState.SetAnimation(0, animationName, isLoop);
         }
     }

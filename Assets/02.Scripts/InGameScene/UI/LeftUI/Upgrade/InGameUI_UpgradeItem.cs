@@ -41,38 +41,16 @@ namespace InGameScene.UI
 
             _weaponPrice.text = "가격 : " + weaponInfo.Price.ToString();
 
-            _weaponBuyButton.onClick.AddListener(BuyButton);
+            _weaponBuyButton.onClick.RemoveAllListeners();
+            _weaponEquipButton.onClick.RemoveAllListeners();
 
+            _weaponBuyButton.onClick.AddListener(BuyButton);
             _weaponEquipButton.onClick.AddListener(EquipButton);
 
             _update = action;
             _update.Invoke();
 
-            //TODO: Weapon이 Inventory에 있을경우 EquipButton을 활성화.
-            foreach (var equipWeapon in StaticManager.Backend.GameData.WeaponInventory.Dictionary)
-            {
-                if (equipWeapon.Value.WeaponChartId == _weaponInfo.WeaponID)
-                {
-                    _weaponBuyButton.gameObject.SetActive(false);
-                    _weaponEquipButton.gameObject.SetActive(true);
-                    _weaponStatusText.text = "착용";
-                }
-            }
-
-            foreach (var item in StaticManager.Backend.GameData.WeaponEquip.Dictionary.Keys)
-            {
-                foreach (var item2 in StaticManager.Backend.GameData.WeaponInventory.Dictionary.Values)
-                {
-                    if (item2.WeaponChartId == _weaponInfo.WeaponID)
-                    {
-                        if (item == item2.MyWeaponId.ToString())
-                        {
-                            _weaponStatusText.text = "착용 중";
-                        }
-                    }
-                }
-            }
-
+            EquipCheck();
         }
 
         // 구매 버튼 클릭시 현재 자금 무기를 비교하여 구매 여부 판단
@@ -151,6 +129,35 @@ namespace InGameScene.UI
                     }
 
                     index++;
+                }
+            }
+        }
+        
+        public void EquipCheck()
+        {
+            //TODO: Weapon이 Inventory에 있을경우 EquipButton을 활성화.
+            foreach (var equipWeapon in StaticManager.Backend.GameData.WeaponInventory.Dictionary)
+            {
+                if (equipWeapon.Value.WeaponChartId == _weaponInfo.WeaponID)
+                {
+                    _weaponBuyButton.gameObject.SetActive(false);
+                    _weaponEquipButton.gameObject.SetActive(true);
+                    _weaponStatusText.text = "착용";
+                }
+            }
+
+            foreach (var item in StaticManager.Backend.GameData.WeaponEquip.Dictionary.Keys)
+            {
+                foreach (var item2 in StaticManager.Backend.GameData.WeaponInventory.Dictionary.Values)
+                {
+                    if (item2.WeaponChartId == _weaponInfo.WeaponID)
+                    {
+                        if (item == item2.MyWeaponId.ToString())
+                        {
+                            _weaponStatusText.text = "착용 중";
+                            _weaponEquipButton.enabled = false;
+                        }
+                    }
                 }
             }
         }

@@ -65,7 +65,7 @@ public class LoginUI_Policy : BaseUI {
 
     // GetPolicy 함수 호출 함수
     private void SetPolicyInfoText(ShowUIFunc showUIFunc) {
-        SendQueue.Enqueue(Backend.Policy.GetPolicy, callback => {
+        SendQueue.Enqueue(Backend.Policy.GetPolicyV2, callback => {
             try {
                 if (IsBackendError(callback)) {
                     _policyTermsInfoText = "오류가 발생했습니다.";
@@ -75,21 +75,21 @@ public class LoginUI_Policy : BaseUI {
                 }
 
                 // 서비스 이용약관에 대한 정보 파싱
-                if (callback.GetReturnValuetoJSON()["terms"] == null) {
+                if (callback.GetReturnValuetoJSON()["policy"]["terms"] == null) {
                     _policyTermsInfoText = "입력된 개인처리보호방침이 존재하지 않습니다.";
                 }
                 else {
-                    _policyTermsInfoText = callback.GetReturnValuetoJSON()["terms"].ToString() ;
+                    _policyTermsInfoText = callback.GetReturnValuetoJSON()["policy"]["terms"].ToString() ;
                     _policyTermsInfoText = _policyTermsInfoText.Replace("&nbsp;", "\n");
                 }
                 _policyInfoText.text = _policyTermsInfoText;
                 
                 // 개인정보처리방침에 대한 정보 파싱
-                if (callback.GetReturnValuetoJSON()["privacy"] == null) {
+                if (callback.GetReturnValuetoJSON()["policy"]["privacy"] == null) {
                     _policyPrivacyInfoText = "입력된 서비스이용약관이 존재하지 않습니다.";
                 }
                 else {
-                    _policyPrivacyInfoText = callback.GetReturnValuetoJSON()["privacy"].ToString();
+                    _policyPrivacyInfoText = callback.GetReturnValuetoJSON()["policy"]["privacy"].ToString();
                     _policyPrivacyInfoText = _policyPrivacyInfoText.Replace("&nbsp;", "\n");
                 }
 

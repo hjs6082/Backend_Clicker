@@ -74,7 +74,7 @@ namespace InGameScene
                 // 각 이름으로 구분하여 알맞는 행동 실행
                 if (item.ItemType.Equals("RedPotion"))
                 {
-                    float multi = item.ItemStat["multi"];
+                    float multi = item.ItemStat["Multi"];
                     float time = item.ItemStat["Time"];
                     isSuccess = Managers.Buff.StartBuff(Buff.BuffStatType.Atk, multi, time,
                         Buff.BuffAdditionType.Multi);

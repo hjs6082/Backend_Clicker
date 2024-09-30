@@ -27,7 +27,7 @@ namespace InGameScene.UI
             currentRewardType = rewardType;
 
             // 팝업 메시지 설정
-            popupMessage.text = $"{rewardType} {reward}을(를) 구매하시겠습니까? \n가격: {price}";
+            popupMessage.text = $"{rewardType} {reward}을(를) 구매하시겠습니까? \n가격: {price} Gem";
         }
 
         // 팝업 버튼 이벤트 초기화

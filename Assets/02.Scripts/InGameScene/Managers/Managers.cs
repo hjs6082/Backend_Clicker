@@ -64,9 +64,9 @@ namespace InGameScene
 
                 Process.Init(_player, _uiManager);
 
-                var buffObject = new GameObject();
-                buffObject.transform.SetParent(this.transform);
-                Buff = buffObject.GetOrAddComponent<BuffManager>();
+                //var buffObject = new GameObject();
+                //buffObject.transform.SetParent(this.transform);
+                Buff = FindAnyObjectByType<BuffManager>();
                 Buff.Init();
 
                 //페이드인

@@ -76,6 +76,8 @@ namespace InGameScene.UI
                 Destroy(_postItemDictionary[inDate]);
                 _postItemDictionary.Remove(inDate);
             }
+
+            UpdateUI();
         }
 
         public void SetPostIconAlert(bool isActive)
