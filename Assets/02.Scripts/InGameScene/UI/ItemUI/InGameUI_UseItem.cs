@@ -51,6 +51,12 @@ namespace InGameScene.UI
 
         private void UseItem()
         {
+            if (Managers.Buff.IsAnyBuffActive())
+            {
+                StaticManager.UI.AlertUI.OpenAlertUI("버프 불가", "이미 활성화된 버프가 존재합니다.");
+                return; 
+            }
+
             int.TryParse(_itemCountText.text, out int itemCount);
             if (itemCount == 0)
             {

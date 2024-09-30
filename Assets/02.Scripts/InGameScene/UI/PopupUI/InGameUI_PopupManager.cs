@@ -10,20 +10,20 @@ namespace InGameScene
     {
         [SerializeField] private GameObject _popupParentObject;
 
-        //[SerializeField] private Button _settingButton;
+        [SerializeField] private Button _settingButton;
         [SerializeField] private Button _playerIconSettingButton;
 
         private const string _path = "Prefabs/InGameScene/UI/";
 
         void Start()
         {
-            //_settingButton.onClick.AddListener(OpenSettingUI);
+            _settingButton.onClick.AddListener(OpenSettingUI);
             _playerIconSettingButton.onClick.AddListener(OpenPlayerIconSettingUI);
         }
 
         private void OpenSettingUI()
         {
-            //OpenUI<InGameUI_Etc>("InGameUI_Etc");
+            OpenUI<InGameUI_Setting>("InGameUI_Setting");
         }
 
         private void OpenPlayerIconSettingUI()

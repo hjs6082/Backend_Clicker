@@ -67,7 +67,7 @@ namespace InGameScene.UI
             {
                 case RewardType.gold:
                     InGameScene.Managers.Game.UpdateUserData(reward, 0);
-                    StaticManager.UI.AlertUI.OpenAlertUI("구매 완료", rewardType + reward + "이(가) 지급되었습니다.");
+                    StaticManager.UI.AlertUI.OpenAlertUI("구매 완료", reward + "Gold" + "이(가) 지급되었습니다.");
                     UpdateUI();
                     break;
                 case RewardType.gem:

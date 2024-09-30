@@ -131,6 +131,7 @@ namespace InGameScene
             if (col.transform.CompareTag("Bullet"))
             {
                 float damage = col.gameObject.GetComponent<BulletObject>().GetDamage();
+
                 Hp -= damage;
 
                 if (Hp <= 0)
@@ -147,6 +148,11 @@ namespace InGameScene
             SetState(EnemyState.Dead);
             SetDropItem();
             Destroy(gameObject, 1);
+
+            foreach (var bulletObject in FindObjectsOfType<BulletObject>())
+            {
+                Destroy(bulletObject.gameObject);
+            }
         }
 
         private void SetDropItem()

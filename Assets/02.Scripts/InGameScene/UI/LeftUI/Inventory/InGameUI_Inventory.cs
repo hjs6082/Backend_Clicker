@@ -28,10 +28,28 @@ namespace InGameScene.UI
         public override void Open()
         {
             base.Open();
+            // 임시 리스트에 삭제할 아이템들을 저장
+            List<GameObject> itemsToDelete = new List<GameObject>();
 
+            // 모든 인벤토리 아이템을 임시 리스트에 추가
             foreach (var item in _inventoryItems)
             {
-                item.SetFocus(false);
+                itemsToDelete.Add(item.gameObject);
+            }
+
+            // 임시 리스트에 있는 오브젝트를 Destroy
+            foreach (var item in itemsToDelete)
+            {
+                Destroy(item);
+            }
+
+            // _inventoryItems 리스트 초기화
+            _inventoryItems.Clear();
+
+            // 현재 가지고 있는 무기를 가져와 아이템으로 만든다.
+            foreach (var weapon in StaticManager.Backend.GameData.WeaponInventory.Dictionary)
+            {
+                AddWeaponObjectInInventoryUI(weapon.Value.MyWeaponId);
             }
 
             _weaponInventoryPopup.gameObject.SetActive(false);

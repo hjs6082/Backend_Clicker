@@ -35,6 +35,9 @@ namespace InGameScene.UI
         [SerializeField]
         private TMP_Text _weaponEquipText;
 
+        [SerializeField]
+        private Image _weaponUpgradeIcon;
+
         private BackendData.GameData.WeaponInventory.Item _weaponItem;
 
         public void SetData(BackendData.GameData.WeaponInventory.Item weaponItem, InGameUI_Inventory inventory)
@@ -51,6 +54,7 @@ namespace InGameScene.UI
             _weaponSpeedText.text = _weaponItem.GetCurrentWeaponStat().Spd.ToString();
             _weaponDelayText.text = _weaponItem.GetCurrentWeaponStat().Delay.ToString();
 
+            _weaponUpgradeIcon.gameObject.SetActive(true);
             _weaponUpgradePriceText.text = _weaponItem.GetCurrentWeaponStat().UpgradePrice.ToString();
 
             _weaponEquipButton.enabled = true;
@@ -104,6 +108,9 @@ namespace InGameScene.UI
             // 레벨 갱신
             _weaponLevelText.text = "+" + _weaponItem.WeaponLevel.ToString();
 
+            // 이름 갱신
+            _weaponNameText.text = _weaponItem.GetWeaponChartData().WeaponName + " +" + _weaponItem.WeaponLevel;
+
             // 스텟 갱신
             _weaponAtkText.text = _weaponItem.GetCurrentWeaponStat().Atk.ToString();
             _weaponSpeedText.text = _weaponItem.GetCurrentWeaponStat().Spd.ToString();
@@ -114,6 +121,14 @@ namespace InGameScene.UI
 
             _inventory.UpdateUI();
             _inventory.SetItemUI();
+
+            if(_weaponItem.GetCurrentWeaponStat().Delay < 0.2)
+            {
+                _weaponUpgradeButton.enabled = false;
+                _weaponUpgradePriceText.text = "최대 강화 달성";
+                _weaponUpgradeIcon.gameObject.SetActive(false);
+            }
+
         }
 
         void OnClickEquipButton()
