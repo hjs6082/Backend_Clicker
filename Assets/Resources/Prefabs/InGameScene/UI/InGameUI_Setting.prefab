@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD604\uC7AC \uACF5\uACA9\uB825"
+  m_text: "\uCD1D \uACE8\uB4DC \uC0AC\uC6A9\uB7C9"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5f541a77431b69d45a87fa5bdb1ed1bb, type: 2}
   m_sharedMaterial: {fileID: -6168412055259312772, guid: 5f541a77431b69d45a87fa5bdb1ed1bb, type: 2}
@@ -186,8 +186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8899d580af3ddd438ec6022fb0e0714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nowStageText: {fileID: 655440194459284902}
-  nowAtkText: {fileID: 655440194068359950}
+  defeatEnemyCountText: {fileID: 655440194459284902}
+  allUsingGoldText: {fileID: 655440194068359950}
   lastDateText: {fileID: 655440193241342264}
   couponButton: {fileID: 3908257466862611827}
   logoutButton: {fileID: 6147073999229387061}
@@ -212,7 +212,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &655440193042625956
 RectTransform:
   m_ObjectHideFlags: 0
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -607,7 +607,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD604\uC7AC \uC2A4\uD14C\uC774\uC9C0"
+  m_text: "\uCD1D \uC801 \uCC98\uCE58 \uC218"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5f541a77431b69d45a87fa5bdb1ed1bb, type: 2}
   m_sharedMaterial: {fileID: -6168412055259312772, guid: 5f541a77431b69d45a87fa5bdb1ed1bb, type: 2}
@@ -862,7 +862,7 @@ GameObject:
   - component: {fileID: 655440193736165775}
   - component: {fileID: 655440193736165774}
   m_Layer: 5
-  m_Name: Atk_Button
+  m_Name: AllUsingGold_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -995,7 +995,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 455d317bd36c5444483f77940660f34b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c249affb68c10448491cf5f21db84c12, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1149,7 +1149,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 40f8ecd1b27d34a80813bf14c543baba, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b944c63612ae9407cbd657cf70397e9b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1225,7 +1225,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 10000 K
+  m_text: 100000G
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5f541a77431b69d45a87fa5bdb1ed1bb, type: 2}
   m_sharedMaterial: {fileID: -6168412055259312772, guid: 5f541a77431b69d45a87fa5bdb1ed1bb, type: 2}
@@ -1332,7 +1332,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 739.55975, y: 0}
   m_SizeDelta: {x: 1479.1195, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &655440194241957891
@@ -1599,7 +1599,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBE5B\uC758 \uAE38 1"
+  m_text: 100000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5f541a77431b69d45a87fa5bdb1ed1bb, type: 2}
   m_sharedMaterial: {fileID: -6168412055259312772, guid: 5f541a77431b69d45a87fa5bdb1ed1bb, type: 2}
@@ -1756,7 +1756,7 @@ GameObject:
   - component: {fileID: 655440194775956216}
   - component: {fileID: 655440194775956215}
   m_Layer: 5
-  m_Name: Stage_Stat
+  m_Name: AllEnemyDefault_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2633,7 +2633,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 739.55975, y: 0}
   m_SizeDelta: {x: 1479.1195, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3131343804061247579

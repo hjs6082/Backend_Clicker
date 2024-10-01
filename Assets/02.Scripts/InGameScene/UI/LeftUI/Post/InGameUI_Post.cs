@@ -78,6 +78,15 @@ namespace InGameScene.UI
             }
 
             UpdateUI();
+
+            if (StaticManager.Backend.Post.Dictionary.Count <= 0)
+            {
+                SetPostIconAlert(false);
+            }
+            else
+            {
+                SetPostIconAlert(true);
+            }
         }
 
         public void SetPostIconAlert(bool isActive)
