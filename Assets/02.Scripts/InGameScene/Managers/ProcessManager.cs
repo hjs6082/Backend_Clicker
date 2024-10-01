@@ -198,5 +198,10 @@ namespace InGameScene
             dropItem.GetComponent<Rigidbody2D>().AddForce(new Vector2(randomX % 2 == 0 ? randomX : -randomX, randomY), ForceMode2D.Force);
             Object.Destroy(dropItem, 4f);
         }
+        
+        public void AttackEffect(float damage)
+        {
+            _uiManager.EnemyUI.OnAttackAnimation(damage);
+        }
     }
 }

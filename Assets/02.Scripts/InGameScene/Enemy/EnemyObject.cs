@@ -134,6 +134,8 @@ namespace InGameScene
 
                 Hp -= damage;
 
+                Managers.Process.AttackEffect(damage);
+
                 if (Hp <= 0)
                 {
                     Dead();

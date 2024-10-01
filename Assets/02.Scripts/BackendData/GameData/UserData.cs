@@ -28,10 +28,12 @@ namespace BackendData.GameData
         public float DayUsingGold { get; set; }
         public float WeekUsingGold { get; set; }
         public float MonthUsingGold { get; set; }
+        public float AllUsingGold { get; set; }
 
         public int DayDefeatEnemyCount { get; private set; }
         public int WeekDefeatEnemyCount { get; private set; }
         public int MonthDefeatEnemyCount { get; private set; }
+        public int AllDefeatEnemyCount { get; private set; }
     }
 
     //===============================================================
@@ -65,10 +67,12 @@ namespace BackendData.GameData
             DayUsingGold = float.Parse(gameDataJson["DayUsingGold"].ToString());
             WeekUsingGold = float.Parse(gameDataJson["WeekUsingGold"].ToString());
             MonthUsingGold = float.Parse(gameDataJson["MonthUsingGold"].ToString());
+            AllUsingGold = float.Parse(gameDataJson["AllUsingGold"].ToString());
 
             DayDefeatEnemyCount = int.Parse(gameDataJson["DayDefeatEnemyCount"].ToString());
             WeekDefeatEnemyCount = int.Parse(gameDataJson["WeekDefeatEnemyCount"].ToString());
             MonthDefeatEnemyCount = int.Parse(gameDataJson["MonthDefeatEnemyCount"].ToString());
+            AllDefeatEnemyCount = int.Parse(gameDataJson["AllDefeatEnemyCount"].ToString());
 
             Jewel = gameDataJson.ContainsKey("Jewel") ? float.Parse(gameDataJson["Jewel"].ToString()) : 0;
         }
@@ -101,10 +105,12 @@ namespace BackendData.GameData
             param.Add("DayUsingGold", DayUsingGold);
             param.Add("WeekUsingGold", WeekUsingGold);
             param.Add("MonthUsingGold", MonthUsingGold);
+            param.Add("AllUsingGold", AllUsingGold);
 
             param.Add("DayDefeatEnemyCount", DayDefeatEnemyCount);
             param.Add("WeekDefeatEnemyCount", WeekDefeatEnemyCount);
             param.Add("MonthDefeatEnemyCount", MonthDefeatEnemyCount);
+            param.Add("AllDefeatEnemyCount", AllDefeatEnemyCount);
 
             return param;
         }
@@ -115,6 +121,7 @@ namespace BackendData.GameData
             DayDefeatEnemyCount++;
             WeekDefeatEnemyCount++;
             MonthDefeatEnemyCount++;
+            AllDefeatEnemyCount++;
         }
 
         // 유저의 정보를 변경하는 함수
@@ -131,6 +138,7 @@ namespace BackendData.GameData
                 DayUsingGold += tempMoney;
                 WeekUsingGold += tempMoney;
                 MonthUsingGold += tempMoney;
+                AllUsingGold += tempMoney;
             }
 
             if (Exp > MaxExp)

@@ -15,6 +15,8 @@ namespace InGameScene.UI
         [SerializeField] private TMP_Text _enemyNameText;
         [SerializeField] private Slider _enemyHpSlider;
         [SerializeField] private TMP_Text _enemyHpText;
+        [SerializeField] private GameObject _enemyAttackEffectTextPrefab;
+        [SerializeField] private Transform _enemyAttackEffectTransform;
 
         private float _maxHp;
         private float _currentHp;
@@ -23,6 +25,8 @@ namespace InGameScene.UI
         {
             // hp바 비활성화
             ShowUI(false);
+
+            _enemyAttackEffectTextPrefab = Resources.Load<GameObject>("Prefabs/AttackEffectObject");
         }
 
         // 적 정보 갱신
@@ -50,6 +54,15 @@ namespace InGameScene.UI
         public void ShowUI(bool isShow)
         {
             gameObject.SetActive(isShow);
+        }
+
+        public void OnAttackAnimation(float damage)
+        {
+            GameObject attackEffectObj = Instantiate(_enemyAttackEffectTextPrefab, _enemyAttackEffectTransform.position, Quaternion.identity);
+            attackEffectObj.transform.SetParent(_enemyAttackEffectTransform, false);
+            attackEffectObj.transform.localPosition = Vector2.zero;
+            attackEffectObj.transform.localScale = Vector2.one;
+            attackEffectObj.GetComponent<AttackTextEffect>().Play(damage);
         }
     }
 }

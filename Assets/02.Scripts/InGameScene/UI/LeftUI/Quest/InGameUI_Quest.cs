@@ -33,7 +33,7 @@ namespace InGameScene.UI
                 newQuestItem.transform.localScale = new Vector3(1, 1, 1);
 
                 var useItem = newQuestItem.GetComponent<InGameUI_QuestItem>();
-                useItem.Init(questItem.Value);
+                useItem.Init(questItem.Value,UpdateUI);
                 _questItemDic.Add(questItem.Value.QuestID, useItem);
 
                 // 해당 퀘스트 타입

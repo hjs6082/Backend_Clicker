@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using BackendData.Chart.Quest;
+using UnityEngine.Events;
 
 namespace InGameScene.UI
 {
@@ -29,6 +30,8 @@ namespace InGameScene.UI
 
         private Item _questItemInfo;
 
+        private UnityAction _onResiveAction;
+
         // 퀘스트 타입 리턴하는 함수
         public QuestRepeatType GetRepeatType()
         {
@@ -38,9 +41,10 @@ namespace InGameScene.UI
         // 퀘스트 보상 리스트
         private List<string> _rewardList = new();
 
-        public void Init(Item questItemInfo)
+        public void Init(Item questItemInfo, UnityAction onResiveAction)
         {
             _questItemInfo = questItemInfo;
+            _onResiveAction += onResiveAction;
 
             switch (_questItemInfo.QuestRepeatType)
             {
@@ -205,6 +209,7 @@ namespace InGameScene.UI
                 foreach (var item in _questItemInfo.RewardStat)
                 {
                     InGameScene.Managers.Game.UpdateUserData(item.Money, item.Exp);
+                    _onResiveAction.Invoke();
                 }
             }
 
