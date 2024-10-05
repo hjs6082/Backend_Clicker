@@ -173,7 +173,7 @@ namespace InGameScene
                     break;
                 case MoveState.MoveToNextStage:
                     SetAnimation("Run ARCHER");
-                    _destination = new Vector3(14.22f, 0.98f, 0);
+                    _destination = new Vector3(14.22f, -0.98f, 0);
                     break;
             }
 

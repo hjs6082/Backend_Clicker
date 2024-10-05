@@ -17,7 +17,9 @@ namespace InGameScene
         private GameObject _enemyPrefab;
         private GameObject _dropItemPrefab;
 
-        private int _currentStageNum = 0;
+        //private int _currentStageNum = 0;
+
+        private int _enemyDeafultCount = 0;
 
         private EnemyObject _enemyItem;
 
@@ -25,8 +27,8 @@ namespace InGameScene
         {
             _player = player;
             _uiManager = uiManager;
-            _currentStageNum = 0;
-            SetStage();
+            //_currentStageNum = 0;
+            //SetStage();
 
             _enemyPrefab = Resources.Load<GameObject>("Prefabs/InGameScene/EnemyObject");
             _dropItemPrefab = Resources.Load<GameObject>("Prefabs/InGameScene/DropItemObject");
@@ -43,7 +45,7 @@ namespace InGameScene
             return _enemyItem;
         }
 
-        // 현재 내 게임 레벨과 스테이지 권장 레벨을 비교하여 현재 스테이지 정보를 
+/*        // 현재 내 게임 레벨과 스테이지 권장 레벨을 비교하여 현재 스테이지 정보를 
         private void SetStage()
         {
             for (int i = 0; i < StaticManager.Backend.Chart.Stage.List.Count; i++)
@@ -57,12 +59,36 @@ namespace InGameScene
                     break;
                 }
             }
-        }
+        }*/
 
         //적을 처치하고 난 이후 다른 적을 생성하는 함수
         private void RespawnNextEnemy()
         {
-            // 설정된 스테이지값을 넘는 하드코어 유저가 존재할 경우, 마지막 스테이지 정보로 계속 유지
+            if(StaticManager.Backend.GameData.UserData.Stage - 1 > StaticManager.Backend.Chart.Stage.List.Count)
+            {
+                if (_enemyDeafultCount >= 3)
+                {
+                    _enemyDeafultCount = 0;
+                    RespawnBossEnemy();
+                }
+                else
+                {
+                    RespawnRandomEnemy();
+                }
+                return;
+            }
+
+            if(_enemyDeafultCount >= 3)
+            {
+                _enemyDeafultCount = 0;
+                RespawnBossEnemy();
+            }
+            else
+            {
+                RespawnRandomEnemy();
+            }
+
+/*            // 설정된 스테이지값을 넘는 하드코어 유저가 존재할 경우, 마지막 스테이지 정보로 계속 유지
             if (_currentStageNum > StaticManager.Backend.Chart.Stage.List.Count)
             {
                 RespawnRandomEnemy();
@@ -78,18 +104,32 @@ namespace InGameScene
             else
             {
                 RespawnRandomEnemy();
-            }
+            }*/
         }
 
         //현재 스테이지의 EnemyInfoList에 있는 랜덤한 적을 불러와 생성하는 함수
         private void RespawnRandomEnemy()
         {
             int randomMin = 0;
-            int randomMax = StaticManager.Backend.Chart.Stage.List[_currentStageNum].EnemyInfoList.Count;
+            int randomMax = StaticManager.Backend.Chart.Stage.List[StaticManager.Backend.GameData.UserData.Stage - 1].EnemyInfoList.Count;
             int randomValue = Random.Range(randomMin, randomMax);
 
-            BackendData.Chart.Stage.Item.EnemyInfo enemyInfo = StaticManager.Backend.Chart.Stage.List[_currentStageNum].EnemyInfoList[randomValue];
+            BackendData.Chart.Stage.Item.EnemyInfo enemyInfo = StaticManager.Backend.Chart.Stage.List[StaticManager.Backend.GameData.UserData.Stage - 1].EnemyInfoList[randomValue];
             CreateEnemy(enemyInfo);
+        }
+
+        private void RespawnBossEnemy()
+        {
+            foreach (var item in StaticManager.Backend.Chart.Boss.Dictionary.Values)
+            {
+/*                Debug.Log(_currentStageNum + "입니다");
+                Debug.Log(item.BossName);*/
+                if(item.BossID == StaticManager.Backend.GameData.UserData.Stage)
+                {
+                    CreateBoss(item);
+                    _uiManager.EnemyUI.OnBossAnimation();
+                }
+            }
         }
 
         // 다음 스테이지로 가는 연출을 보여주는 함수 1.(플레이어가 오른쪽 화면 밖으로 가고 페이드 아웃되기까지)
@@ -107,8 +147,9 @@ namespace InGameScene
         private void StartNextStage()
         {
             _player.SetMove(Player.MoveState.MoveToAttack);
-            _uiManager.StageUI.ShowTitleStage(StaticManager.Backend.Chart.Stage.List[_currentStageNum].StageName);
-            RespawnRandomEnemy();
+            _uiManager.StageUI.ShowTitleStage(StaticManager.Backend.Chart.Stage.List[StaticManager.Backend.GameData.UserData.Stage - 1].StageName);
+            //RespawnRandomEnemy();
+            RespawnNextEnemy();
         }
 
         // 적을 생성하는 함수
@@ -116,7 +157,7 @@ namespace InGameScene
         private void CreateEnemy(BackendData.Chart.Stage.Item.EnemyInfo stageEnemyInfo)
         {
             Vector3 enemyRespawnPosition = new Vector3(11.39f, -0.91f, 0);
-            Vector3 enemyStayPosition = new Vector3(6.48f, -0.91f, 0);
+            Vector3 enemyStayPosition = new Vector3(5.078f, -0.91f, 0);
 
             // 적 차트정보에서 데이터 불러오기
             BackendData.Chart.Enemy.Item enemyInfo =
@@ -138,11 +179,58 @@ namespace InGameScene
             // 적 프리팹을 인스턴스화
             GameObject enemyObject = GameObject.Instantiate(enemyPrefab);
             enemyObject.transform.localPosition = enemyRespawnPosition;
-            enemyObject.transform.localScale = new Vector3(1, 1, 1);
+            //enemyObject.transform.localScale = new Vector3(1, 1, 1);
 
             EnemyObject enemy = enemyObject.GetComponent<EnemyObject>();
             enemy.Init(enemyInfo, multiStat, enemyStayPosition);
             _enemyItem = enemy;
+            _player.SetNewEnemy(enemy);
+            _uiManager.EnemyUI.SetEnemyInfo(enemy.Name, enemy.MaxHp);
+            _uiManager.EnemyUI.ShowUI(true);
+            _uiManager.EnemyUI.ShowBossUI(false);
+        }
+
+        private void CreateBoss(BackendData.Chart.Boss.Item stageBossInfo)
+        {
+            //만약 다음 스테이지가 존재하지않는다면 랜덤한 보스를 소환한다.
+            if(StaticManager.Backend.GameData.UserData.Stage >= StaticManager.Backend.Chart.Stage.List.Count)
+            {
+                int randomMin = 0;
+                int randomMax = StaticManager.Backend.Chart.Boss.Dictionary.Count;
+                int randomValue = Random.Range(randomMin, randomMax);
+
+                foreach (var item in StaticManager.Backend.Chart.Boss.Dictionary.Values)
+                {
+                    if (item.BossID == randomValue)
+                        stageBossInfo = item;
+                }
+            }
+
+            Vector3 bossRespawnPosition = new Vector3(11.39f, -0.91f, 0);
+            Vector3 bossStayPosition = new Vector3(5.078f, -0.91f, 0);
+
+            // 프리팹 로딩 (차트의 Image 이름을 기반으로 프리팹을 로드)
+            string prefabPath = $"Prefabs/Monster/Boss/{stageBossInfo.Image}";
+            GameObject enemyPrefab = Resources.Load<GameObject>(prefabPath);
+
+            if (enemyPrefab == null)
+            {
+                Debug.LogError($"Prefab not found at path: {prefabPath}");
+                return;
+            }
+
+            // 적 프리팹을 인스턴스화
+            GameObject enemyObject = GameObject.Instantiate(enemyPrefab);
+            enemyObject.transform.localPosition = bossRespawnPosition;
+            enemyObject.transform.localScale = new Vector3(1, 1, 1);
+
+            EnemyObject enemy = enemyObject.GetComponent<EnemyObject>();
+            enemy.InitBoss(stageBossInfo, bossStayPosition);
+            _enemyItem = enemy;
+            _player.SetNewEnemy(enemy);
+            _uiManager.EnemyUI.SetEnemyInfo(enemy.Name, enemy.MaxHp);
+            _uiManager.EnemyUI.ShowUI(true);
+            _uiManager.EnemyUI.ShowBossUI(true);
         }
 
 
@@ -154,15 +242,19 @@ namespace InGameScene
             switch (enemyItem.CurrentEnemyState)
             {
                 case EnemyObject.EnemyState.Init:
-                    _player.SetNewEnemy(enemyItem);
-                    _uiManager.EnemyUI.SetEnemyInfo(enemyItem.Name, enemyItem.MaxHp);
+                    //_player.SetNewEnemy(enemyItem);
+/*                    _uiManager.EnemyUI.SetEnemyInfo(enemyItem.Name, enemyItem.MaxHp);
                     _uiManager.EnemyUI.ShowUI(true);
+                    _uiManager.EnemyUI.ShowBossUI(enemyItem.isBoss);*/
                     break;
                 case EnemyObject.EnemyState.Normal:
 
                     _uiManager.EnemyUI.SetCurrentHp(enemyItem.Hp);
                     break;
                 case EnemyObject.EnemyState.Dead:
+                    
+                    //TODO : 보스체크 필요
+
                     float moneyToAdd = enemyItem.Money;
 
                     // Money 버프가 활성화되어 있는지 확인
@@ -176,8 +268,30 @@ namespace InGameScene
                     StaticManager.Backend.GameData.UserData.CountDefeatEnemy();
                     _uiManager.LeftUI.GetUI<InGameUI_Quest>().UpdateUI(BackendData.Chart.Quest.QuestType.DefeatEnemy);
                     _player.SetNewEnemy(null);
-                    RespawnNextEnemy();
-                    _uiManager.EnemyUI.ShowUI(false);
+                    if (enemyItem.isBoss)
+                    {
+                        if (StaticManager.Backend.GameData.UserData.Stage >= StaticManager.Backend.Chart.Stage.List.Count)
+                        {
+                            RespawnNextEnemy();
+                        }
+                        else
+                        {
+                            StaticManager.Backend.GameData.UserData.UpdateStage(1);
+                            GoNextStage();
+                            _uiManager.EnemyUI.ShowUI(false);
+                        }
+                    }
+                    else
+                    {
+                        _enemyDeafultCount++;
+                        RespawnNextEnemy();
+                    }
+                    Debug.Log(StaticManager.Backend.GameData.UserData.Stage + "입니다");
+                    Debug.Log(StaticManager.Backend.Chart.Stage.List.Count + "입니다2");
+                    Debug.Log(_enemyDeafultCount + "입니다3");
+                    //_uiManager.EnemyUI.ResetUI();
+                    //_uiManager.EnemyUI.ShowBossUI(false);
+                    //_uiManager.EnemyUI.ShowUI(false);
                     break;
             }
         }

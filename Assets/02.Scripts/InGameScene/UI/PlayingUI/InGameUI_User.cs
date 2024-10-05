@@ -14,6 +14,7 @@ namespace InGameScene.UI
     {
         [SerializeField] private TMP_Text _NickNameText;
         [SerializeField] private Slider _ExpSlider;
+        [SerializeField] private TMP_Text _ExpText;
 
         [SerializeField] private Image _playerIcon;
         [SerializeField] private TMP_Text _levelText;
@@ -32,6 +33,8 @@ namespace InGameScene.UI
 
             _ExpSlider.maxValue = StaticManager.Backend.GameData.UserData.MaxExp;
             _ExpSlider.value = StaticManager.Backend.GameData.UserData.Exp;
+
+            _ExpText.text = Mathf.FloorToInt(StaticManager.Backend.GameData.UserData.Exp).ToString() + "/" + StaticManager.Backend.GameData.UserData.MaxExp;
 
             _levelText.text = "Lv." + StaticManager.Backend.GameData.UserData.Level.ToString();
             _moneyText.text = StaticManager.Backend.GameData.UserData.Money.ToString();

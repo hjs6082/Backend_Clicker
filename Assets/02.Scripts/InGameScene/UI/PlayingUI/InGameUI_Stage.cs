@@ -3,6 +3,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace InGameScene.UI
 {
@@ -12,6 +13,9 @@ namespace InGameScene.UI
     public class InGameUI_Stage : MonoBehaviour
     {
         [SerializeField] private GameObject _titleStageText;
+        [SerializeField] private Slider _stageSlider;
+        [SerializeField] private Image[] _stageIcons;
+
         //private float _titleStateTextMoveSpeed = 400.0f;
 
         // 현재 스테이지 보여주는 코루틴 함수 시작하는 함수
