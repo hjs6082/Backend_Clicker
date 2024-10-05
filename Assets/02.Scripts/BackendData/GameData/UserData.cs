@@ -15,6 +15,7 @@ namespace BackendData.GameData
     public partial class UserData
     {
         public int Level { get; private set; }
+        public int Stage { get; private set; }
         public float Money { get; private set; }
         public int Gem { get; private set; }
         public int PlayerIcon { get; private set; }
@@ -46,6 +47,7 @@ namespace BackendData.GameData
         protected override void InitializeData()
         {
             Level = 1;
+            Stage = 1;
             Money = 10000;
             MaxExp = 100;
             Gem = 10;
@@ -57,6 +59,7 @@ namespace BackendData.GameData
         protected override void SetServerDataToLocal(JsonData gameDataJson)
         {
             Level = int.Parse(gameDataJson["Level"].ToString());
+            Stage = int.Parse(gameDataJson["Stage"].ToString());
             Exp = float.Parse(gameDataJson["Exp"].ToString());
             MaxExp = float.Parse(gameDataJson["MaxExp"].ToString());
             Money = float.Parse(gameDataJson["Money"].ToString());
@@ -95,6 +98,7 @@ namespace BackendData.GameData
             Param param = new Param();
 
             param.Add("Level", Level);
+            param.Add("Stage", Stage);
             param.Add("Money", Money);
             param.Add("Gem", Gem);
             param.Add("PlayerIcon", PlayerIcon);
@@ -156,6 +160,13 @@ namespace BackendData.GameData
             IsChangedData = true;
 
             Gem += gem;
+        }
+
+        public void UpdateStage(int stage)
+        {
+            IsChangedData = true;
+            
+            Stage += stage;
         }
 
         public void UpdatePlayerIcon(int playerIconNum)

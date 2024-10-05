@@ -135,6 +135,7 @@ namespace InGameScene.UI
                 .IsAchieve;
             if (isAchieve)
             { // 이미 달성된 상태라면
+                this.transform.SetAsLastSibling();
                 _isAchieveText.text = "완료";
                 _requestAchieveButton.onClick.RemoveAllListeners();
                 _requestAchieveButton.interactable = false;
@@ -144,6 +145,7 @@ namespace InGameScene.UI
             { // 달성이 되었다면
                 if (_questItemInfo.RequestCount <= count)
                 {
+                    this.transform.SetAsFirstSibling();
                     _isAchieveText.text = "달성";
                     _requestAchieveButton.interactable = true;
                     _requestAchieveButton.GetComponent<Image>().color = new Color32(255, 236, 144, 255);

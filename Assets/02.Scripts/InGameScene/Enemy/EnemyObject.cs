@@ -18,7 +18,7 @@ namespace InGameScene
         public float Money { get; private set; }
         public float Exp { get; private set; }
 
-        private const float _moveSpeed = 2f;
+        private const float _moveSpeed = 5f;
         private bool isAnimationSet = false; // 애니메이션 중복 호출 방지
 
         public enum EnemyState
@@ -30,6 +30,9 @@ namespace InGameScene
 
         public EnemyState CurrentEnemyState { get; private set; }
         private BackendData.Chart.Enemy.Item _currentEnemyChartItem;
+        private BackendData.Chart.Boss.Item _currentBossChartItem;
+
+        public bool isBoss { get; private set; }
 
         void Update()
         {
@@ -80,6 +83,7 @@ namespace InGameScene
             if (!isAnimationSet)
             {
                 SetAnimation("Dead");
+                monsterAnimator.timeScale = 3f;
                 isAnimationSet = true;
             }
         }
@@ -87,12 +91,32 @@ namespace InGameScene
         public void Init(BackendData.Chart.Enemy.Item enemyInfo, float multiStat, Vector3 stayPosition)
         {
             _currentEnemyChartItem = enemyInfo;
+            isBoss = false;
 
             Name = enemyInfo.EnemyName;
             MaxHp = enemyInfo.Hp * multiStat;
             Hp = MaxHp;
             Money = enemyInfo.Money * multiStat;
             Exp = enemyInfo.Exp * multiStat;
+
+            _stayPosition = stayPosition;
+            _rigidbody2D = GetComponent<Rigidbody2D>();
+            monsterAnimator = GetComponent<SkeletonAnimation>();
+
+            SetState(EnemyState.Init); // 초기 상태 설정
+            monsterAnimator.Skeleton.ScaleX *= -1;
+        }
+
+        public void InitBoss(BackendData.Chart.Boss.Item bossInfo, Vector3 stayPosition)
+        {
+            _currentBossChartItem = bossInfo;
+            isBoss = true;
+
+            Name = bossInfo.BossName;
+            MaxHp = bossInfo.Hp;
+            Hp = MaxHp;
+            Money = bossInfo.Money;
+            Exp = bossInfo.Exp;
 
             _stayPosition = stayPosition;
             _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -149,7 +173,7 @@ namespace InGameScene
         {
             SetState(EnemyState.Dead);
             SetDropItem();
-            Destroy(gameObject, 1);
+            Destroy(gameObject, 0.5f);
 
             foreach (var bulletObject in FindObjectsOfType<BulletObject>())
             {
@@ -159,13 +183,28 @@ namespace InGameScene
 
         private void SetDropItem()
         {
-            foreach (var dropItem in _currentEnemyChartItem.DropItemList)
+            if (isBoss)
             {
-                double dropPercent = Math.Round((double)Random.Range(0, 100), 2);
-                if (dropItem.DropPercent > dropPercent)
+                foreach (var dropItem in _currentBossChartItem.DropItemList)
                 {
-                    Managers.Game.UpdateItemInventory(dropItem.ItemID, 1);
-                    Managers.Process.DropItem(transform.position, dropItem.ItemID);
+                    double dropPercent = Math.Round((double)Random.Range(0, 100), 2);
+                    if (dropItem.DropPercent > dropPercent)
+                    {
+                        Managers.Game.UpdateItemInventory(dropItem.ItemID, 1);
+                        Managers.Process.DropItem(transform.position, dropItem.ItemID);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var dropItem in _currentEnemyChartItem.DropItemList)
+                {
+                    double dropPercent = Math.Round((double)Random.Range(0, 100), 2);
+                    if (dropItem.DropPercent > dropPercent)
+                    {
+                        Managers.Game.UpdateItemInventory(dropItem.ItemID, 1);
+                        Managers.Process.DropItem(transform.position, dropItem.ItemID);
+                    }
                 }
             }
         }

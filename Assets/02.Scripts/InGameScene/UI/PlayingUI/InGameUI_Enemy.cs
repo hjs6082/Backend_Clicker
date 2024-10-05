@@ -17,6 +17,9 @@ namespace InGameScene.UI
         [SerializeField] private TMP_Text _enemyHpText;
         [SerializeField] private GameObject _enemyAttackEffectTextPrefab;
         [SerializeField] private Transform _enemyAttackEffectTransform;
+        [SerializeField] private GameObject _bossEffectPrefab;
+        [SerializeField] private Transform _bossEffectTransform;
+        [SerializeField] private TMP_Text _bossText;
 
         private float _maxHp;
         private float _currentHp;
@@ -27,6 +30,7 @@ namespace InGameScene.UI
             ShowUI(false);
 
             _enemyAttackEffectTextPrefab = Resources.Load<GameObject>("Prefabs/AttackEffectObject");
+            _bossEffectPrefab = Resources.Load<GameObject>("Prefabs/BossEffectPrefab");
         }
 
         // 적 정보 갱신
@@ -56,6 +60,25 @@ namespace InGameScene.UI
             gameObject.SetActive(isShow);
         }
 
+        public void ShowBossUI(bool isBoss)
+        {
+            if (isBoss)
+            {
+                _bossText.gameObject.SetActive(true);
+            }
+            else
+            {
+                _bossText.gameObject.SetActive(false);
+            }
+        }
+
+        public void ResetUI()
+        {
+            _enemyHpSlider.value = 0;
+            _enemyHpText.text = "0 / "+ _maxHp;
+
+        }
+
         public void OnAttackAnimation(float damage)
         {
             GameObject attackEffectObj = Instantiate(_enemyAttackEffectTextPrefab, _enemyAttackEffectTransform.position, Quaternion.identity);
@@ -63,6 +86,15 @@ namespace InGameScene.UI
             attackEffectObj.transform.localPosition = Vector2.zero;
             attackEffectObj.transform.localScale = Vector2.one;
             attackEffectObj.GetComponent<AttackTextEffect>().Play(damage);
+        }
+
+        public void OnBossAnimation()
+        {
+            _bossText.gameObject.SetActive(true);
+            GameObject attackEffectObj = Instantiate(_bossEffectPrefab, _bossEffectTransform.position, Quaternion.identity);
+            attackEffectObj.transform.SetParent(_bossEffectTransform, false);
+            attackEffectObj.transform.localPosition = Vector2.zero;
+            //_bossEffectPrefab.GetComponent<BossEffect>().StartBossEffect();
         }
     }
 }

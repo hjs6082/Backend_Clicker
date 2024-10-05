@@ -29,6 +29,7 @@ public class BackendManager : MonoBehaviour {
         public readonly BackendData.Chart.Weapon.Manager Weapon = new(); // Weapon 차트
         public readonly BackendData.Chart.Item.Manager Item = new(); // 아이템 차트
         //public readonly BackendData.Chart.Shop.Manager Shop = new(); // 샵 차트
+        public readonly BackendData.Chart.Boss.Manager Boss = new();
     }
 
     // 게임 정보 관리 데이터만 모아놓은 클래스
