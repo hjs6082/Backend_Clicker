@@ -21,6 +21,14 @@ namespace InGameScene
             _playerIconSettingButton.onClick.AddListener(OpenPlayerIconSettingUI);
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                OpenUI<InGameUI_Exit>("InGameUI_Exit");
+            }
+        }
+
         private void OpenSettingUI()
         {
             OpenUI<InGameUI_Setting>("InGameUI_Setting");

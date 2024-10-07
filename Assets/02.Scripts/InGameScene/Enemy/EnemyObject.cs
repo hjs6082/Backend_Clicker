@@ -43,6 +43,7 @@ namespace InGameScene
                     break;
                 case EnemyState.Normal:
                     NormalUpdate();
+                    CheckForTouch();
                     break;
                 case EnemyState.Dead:
                     DeadUpdate();
@@ -86,6 +87,47 @@ namespace InGameScene
                 monsterAnimator.timeScale = 3f;
                 isAnimationSet = true;
             }
+        }
+
+        private void CheckForTouch()
+        {
+            // 모바일 터치와 마우스 클릭 모두 처리
+            if (Input.GetMouseButtonDown(0))
+            {
+                Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                CheckHit(touchPosition);
+            }
+
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+                Vector3 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+                if (touch.phase == TouchPhase.Began)
+                {
+                    CheckHit(touchPosition);
+                }
+            }
+        }
+
+        private void CheckHit(Vector3 touchPosition)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(touchPosition, Vector2.zero);
+            if (hit.collider != null && hit.collider.gameObject == this.gameObject)
+            {
+                // 터치된 경우 체력 감소
+                TakeDamage(10f); // 체력 감소량을 적절히 설정
+                Managers.Process.AttackEffect(10f);
+            }
+        }
+
+        private void TakeDamage(float damage)
+        {
+            Hp -= damage;
+            if (Hp <= 0)
+            {
+                Dead();
+            }
+            Managers.Process.UpdateEnemyStatus(this);
         }
 
         public void Init(BackendData.Chart.Enemy.Item enemyInfo, float multiStat, Vector3 stayPosition)

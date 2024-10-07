@@ -52,7 +52,8 @@ namespace InGameScene
                 int random = UnityEngine.Random.Range(0, _randomBulletSpriteList.Count);
                 Sprite bulletSprite = _randomBulletSpriteList[random];
 
-                bullet.GetComponent<BulletObject>().Shoot(targetRotation, speed, atk);
+                bullet.GetComponent<BulletObject>().Shoot(atk);
+                bullet.transform.position = new Vector2(0, 1f);
             }
             catch (Exception e)
             {

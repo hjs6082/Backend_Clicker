@@ -1,32 +1,24 @@
-// Copyright 2013-2022 AFI, INC. All rights reserved.
-
 using UnityEngine;
-using Quaternion = UnityEngine.Quaternion;
-using Vector3 = UnityEngine.Vector3;
 
 namespace InGameScene
 {
-    //===============================================================
-    // 총알 발사 관련 클래스
-    //===============================================================
     public class BulletObject : MonoBehaviour
     {
-        private float _speed = 0;
         private float _atk = 0;
+        [SerializeField]
+        private ParticleSystem _particleSystem;
 
-        // 방향과 스피드, 적에게 닿을 시 주는 데미지 지정(방향은 각도로)
-        public void Shoot(Quaternion destinationTransform, float speed, float atk)
+        void Start()
         {
-            gameObject.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-            transform.rotation = destinationTransform;
-            _speed = speed;
-            _atk = atk;
+            // 파티클 시스템 컴포넌트 가져오기
+            _particleSystem = this.gameObject.GetComponent<ParticleSystem>();
         }
 
-        // rotation을 돌린채로 앞으로 이동
-        void Update()
+        // 적에게 닿을 시 주는 데미지 지정
+        public void Shoot(float atk)
         {
-            transform.Translate(_speed * Vector3.up * Time.deltaTime);
+            _atk = atk;
+            _particleSystem.Play();  // 파티클 발사
         }
 
         // 내 데미지
@@ -35,17 +27,12 @@ namespace InGameScene
             return _atk;
         }
 
-        // 총알이 맞을 경우 해당 총알 객체 파괴
         private void OnCollisionEnter2D(Collision2D col)
         {
-            if (col.transform.CompareTag("BulletDestroyer"))
+            if (col.transform.CompareTag("BulletDestroyer") || col.transform.CompareTag("Enemy"))
             {
-                Destroy(this.gameObject);
-            }
-
-            if (col.transform.CompareTag("Enemy"))
-            {
-                Destroy(this.gameObject);
+                //_particleSystem.Stop();  // 적중 시 파티클 멈추기
+                Destroy(gameObject, 0.5f);  // 0.5초 후 오브젝트 삭제
             }
         }
     }
