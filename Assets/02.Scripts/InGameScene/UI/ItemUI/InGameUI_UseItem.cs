@@ -51,6 +51,7 @@ namespace InGameScene.UI
 
         private void UseItem()
         {
+            // 버프 중복 가능, or 아님 선택
             if (Managers.Buff.IsAnyBuffActive())
             {
                 StaticManager.UI.AlertUI.OpenAlertUI("버프 불가", "이미 활성화된 버프가 존재합니다.");

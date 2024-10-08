@@ -33,7 +33,7 @@ namespace InGameScene
 
         private Player _player;
         //private CloudManager _cloudManager;
-        private GameObject _bulletPrefab;
+        //private GameObject _bulletPrefab;
 
         private void Awake()
         {
@@ -52,11 +52,11 @@ namespace InGameScene
                 //_cloudManager = FindObjectOfType<CloudManager>();
                 _player = FindObjectOfType<Player>();
 
-                _bulletPrefab = Resources.Load<GameObject>("Prefabs/InGameScene/BulletObject");
-                
-                //_cloudManager.Init();
-                _player.Init(_bulletPrefab);
+                //_bulletPrefab = Resources.Load<GameObject>("Prefabs/InGameScene/BulletObject");
 
+                //_cloudManager.Init();
+                //_player.Init(_bulletPrefab);
+                _player.Init();
                 //Item.Init(_bulletPrefab);
 
                 _uiManager.Init(_userUI, _leftUI, _enemyUI, _stageUI, _itemUI);

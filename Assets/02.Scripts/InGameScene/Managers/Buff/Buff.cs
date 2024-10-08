@@ -9,8 +9,8 @@ namespace InGameScene
     {
         public enum BuffStatType
         {
-            Atk,
             Delay,
+            Atk,
             Gold,
             Exp
         }

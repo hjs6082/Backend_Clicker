@@ -12,7 +12,11 @@ namespace InGameScene
     {
         private Buff[] _buffArray;
         private WaitForSeconds _buffCountSeconds = new WaitForSeconds(1);
-        [SerializeField] private TMP_Text remainingTimeText; // UI 텍스트 요소
+        [SerializeField] private TMP_Text[] remainingTimeText;
+        [SerializeField] private Transform buffEffectTransform;
+
+        private GameObject _buffEffectObject;
+        //[SerializeField] private TMP_Text remainingTimeText; // UI 텍스트 요소
 
         public void Init()
         {
@@ -37,29 +41,41 @@ namespace InGameScene
             }
 
             _buffArray[buffCase].UpdateBuff(stat, time, buffAdditionType);
-            StartCoroutine(StartBuffCoroutine(_buffArray[buffCase]));
-            remainingTimeText.gameObject.SetActive(true);
+            StartCoroutine(StartBuffCoroutine(_buffArray[buffCase], buffCase));
+            remainingTimeText[buffCase].gameObject.SetActive(true);
+            _buffEffectObject = Resources.Load<GameObject>("Prefabs/InGameScene/Buff/Buff_" + buffCase);
+            GameObject buffObject = Instantiate(_buffEffectObject,buffEffectTransform);
+            buffObject.GetComponent<ParticleSystem>().Play();
+            _buffEffectObject = buffObject;
             return true;
         }
 
-        IEnumerator StartBuffCoroutine(Buff buff)
+
+        IEnumerator StartBuffCoroutine(Buff buff, int buffIndex)
         {
             while (buff.Time > 0)
             {
-                UpdateRemainingTimeText(buff.Time); // 남은 시간 업데이트
+                UpdateRemainingTimeText(buffIndex, buff.Time); // 남은 시간 업데이트
                 yield return _buffCountSeconds;
                 buff.Time -= 1;
             }
 
             buff.TurnOffBuff();
-            UpdateRemainingTimeText(0); // 시간이 끝났을 때 UI 텍스트 초기화
+            UpdateRemainingTimeText(buffIndex, 0); // 시간이 끝났을 때 UI 텍스트 초기화
         }
 
-        private void UpdateRemainingTimeText(float time)
+        private void UpdateRemainingTimeText(int buffIndex, float time)
         {
             if (time <= 0)
-                remainingTimeText.gameObject.SetActive(false);
-            remainingTimeText.text = $"버프 남은 시간: {time}초"; // UI 텍스트 업데이트
+            {
+                remainingTimeText[buffIndex].gameObject.SetActive(false); // 남은 시간이 0이면 텍스트 숨김
+                Destroy(_buffEffectObject);
+            }
+            else
+            {
+                //remainingTimeText[buffIndex].text = $"버프 남은 시간: {time}초"; // 각 버프에 맞는 UI 텍스트 업데이트
+                remainingTimeText[buffIndex].text = time.ToString();
+            }
         }
 
         public float GetBuffedStat(Buff.BuffStatType buffStatType, float originalStat)

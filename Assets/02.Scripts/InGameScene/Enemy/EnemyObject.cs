@@ -115,6 +115,8 @@ namespace InGameScene
             if (hit.collider != null && hit.collider.gameObject == this.gameObject)
             {
                 // 터치된 경우 체력 감소
+                GameObject touchEffect = Instantiate(Resources.Load<GameObject>("Prefabs/InGameScene/TouchEffect"), hit.transform);
+                Destroy(touchEffect, 0.5f);
                 TakeDamage(10f); // 체력 감소량을 적절히 설정
                 Managers.Process.AttackEffect(10f);
             }
@@ -217,10 +219,10 @@ namespace InGameScene
             SetDropItem();
             Destroy(gameObject, 0.5f);
 
-            foreach (var bulletObject in FindObjectsOfType<BulletObject>())
+/*            foreach (var bulletObject in FindObjectsOfType<BulletObject>())
             {
                 Destroy(bulletObject.gameObject);
-            }
+            }*/
         }
 
         private void SetDropItem()

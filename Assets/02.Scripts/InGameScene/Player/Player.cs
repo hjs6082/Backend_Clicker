@@ -27,7 +27,7 @@ namespace InGameScene
         public delegate void PlayerAfterMove();
         private PlayerAfterMove _playerAfterMove;
 
-        private GameObject _bulletGameObject; // 총알 Prefab
+        //private GameObject _bulletGameObject; // 총알 Prefab
 
         private EnemyObject _enemy; // 지정중인 적
         private Transform _gunSpriteTransform; // 무기의 이미지 Transform
@@ -36,14 +36,24 @@ namespace InGameScene
         private float _shootTimeScale = 1f;
         private GameObject _bulletObject; // 발사할 총알 객체
         private float _currentTime = 0; // 다음 총알까지 시간
-        private Sprite _bulletImageSprite;
         private BackendData.GameData.WeaponInventory.Item _weaponData;
         private bool _isFireArrow = true; // 화살 발사 여부
 
-        public void Init(GameObject bulletPrefab)
+        public void Init()
         {
+            foreach (var item in StaticManager.Backend.GameData.WeaponEquip.Dictionary.Keys)
+            {
+                foreach (var item2 in StaticManager.Backend.GameData.WeaponInventory.Dictionary.Values)
+                {
+                    if (item == item2.MyWeaponId.ToString())
+                    {
+                        Debug.Log("이름 : " + item2.GetWeaponChartData().BulletImageName);
+                        _weaponData = item2;
+                        //_bulletGameObject = Resources.Load<GameObject>("Prefabs/InGameScene/Bullet/" + _weaponData.GetWeaponChartData().BulletImageName);
+                    }
+                }
+            }
             Debug.Log("함수가 실행되었습니다.");
-            _bulletGameObject = bulletPrefab;
             _gunSpriteTransform = gameObject.transform.GetChild(1).transform;
             _gearEquipper = this.gameObject.GetComponent<GearEquipper>();
             _playerAnimator = GetComponentInChildren<SkeletonAnimation>();
@@ -194,7 +204,7 @@ namespace InGameScene
                 if (weaponInventoryDic.ContainsKey(myWeaponId))
                 {
                     var weaponInventory = weaponInventoryDic[myWeaponId];
-                    ActiveGun(weaponInventory, _bulletGameObject);
+                    ActiveGun(weaponInventory);
                     _gearEquipper.Bow = weaponInventory.GetWeaponChartData().WeaponID - 1;
                     _gearEquipper.ApplySkinChanges();
                 }
@@ -205,12 +215,12 @@ namespace InGameScene
             }
         }
 
-        public void ActiveGun(BackendData.GameData.WeaponInventory.Item weaponInventoryData, GameObject bulletObject)
+        public void ActiveGun(BackendData.GameData.WeaponInventory.Item weaponInventoryData)
         {
             _weaponData = weaponInventoryData;
 
             gameObject.SetActive(true);
-            _bulletObject = bulletObject;
+            _bulletObject = Resources.Load<GameObject>("Prefabs/InGameScene/Bullet/" + _weaponData.GetWeaponChartData().BulletImageName);
         }
 
         public void ReleaseGun()
