@@ -119,6 +119,7 @@ namespace InGameScene
                 Destroy(touchEffect, 0.5f);
                 TakeDamage(10f); // 체력 감소량을 적절히 설정
                 Managers.Process.AttackEffect(10f);
+                SoundManager.Instance.PlaySFX("TouchAttack");
             }
         }
 

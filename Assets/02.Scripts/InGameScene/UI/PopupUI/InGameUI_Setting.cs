@@ -35,6 +35,11 @@ namespace InGameScene.UI.PopupUI
         private Button closeButton;
 
         [SerializeField]
+        private Slider bgSlider;
+        [SerializeField]
+        private Slider sfxSlider;
+
+        [SerializeField]
         private GameObject couponPanel;
 
         public override void Init()
@@ -73,6 +78,8 @@ namespace InGameScene.UI.PopupUI
             resignButton.onClick.AddListener(OnResignButtonClick);
             saveButton.onClick.AddListener(OnSaveButtonClick);
             closeButton.onClick.AddListener(OnCloseButtonClick);
+            bgSlider.onValueChanged.AddListener(SoundManager.Instance.BGSoundVolume);
+            sfxSlider.onValueChanged.AddListener(SoundManager.Instance.SFXSoundVolume);
         }
 
         public override void Open()

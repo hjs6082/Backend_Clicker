@@ -11,7 +11,7 @@ public class AttackTextEffect : MonoBehaviour
 
     public void Play(float damage)
     {
-        attackText.text = damage.ToString();
+        attackText.text = damage.ToString() + "K";
 
         // 현재 위치에서 1.0f만큼 위로 이동하며, 0.5초 동안 움직이고 서서히 사라지도록 설정
         transform.DOMoveY(transform.position.y + 1.0f, 0.5f)

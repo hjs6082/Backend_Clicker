@@ -122,6 +122,8 @@ namespace InGameScene.UI
             _inventory.UpdateUI();
             _inventory.SetItemUI();
 
+            SoundManager.Instance.PlaySFX("Upgrade");
+
             if(_weaponItem.GetCurrentWeaponStat().Delay < 0.2)
             {
                 _weaponUpgradeButton.enabled = false;
@@ -146,6 +148,7 @@ namespace InGameScene.UI
                         Debug.Log("¹Ù²Ü ¾ÆÀÌµð : " + _weaponItem.MyWeaponId);
                         InGameScene.Managers.Game.UpdateWeaponEquip(item, _weaponItem.MyWeaponId);
                         StaticManager.UI.AlertUI.OpenAlertUI("Âø¿ë ¿Ï·á", _weaponItem.GetWeaponChartData().WeaponName + "ÀÌ(°¡) Âø¿ëµÇ¾ú½À´Ï´Ù.");
+                        SoundManager.Instance.PlaySFX("Equip");
                         _weaponEquipText.text ="Âø¿ë Áß";
 
                         _weaponEquipButton.enabled = false;

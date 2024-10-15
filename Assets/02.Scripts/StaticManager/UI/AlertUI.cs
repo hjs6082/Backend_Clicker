@@ -37,6 +37,7 @@ public class AlertUI : MonoBehaviour {
 
         _alertTitleImage.color = new Color32(61,138,0,255);
         OpenUI(title, infoText, null);
+        SoundManager.Instance.PlaySFX("Alert");
     }
     
     // 안내 경고창 전용 UI

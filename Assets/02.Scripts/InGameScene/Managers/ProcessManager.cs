@@ -64,7 +64,7 @@ namespace InGameScene
         //적을 처치하고 난 이후 다른 적을 생성하는 함수
         private void RespawnNextEnemy()
         {
-            if(StaticManager.Backend.GameData.UserData.Stage - 1 > StaticManager.Backend.Chart.Stage.List.Count)
+/*            if(StaticManager.Backend.GameData.UserData.Stage - 1 > StaticManager.Backend.Chart.Stage.List.Count)
             {
                 if (_enemyDeafultCount >= 3)
                 {
@@ -86,25 +86,31 @@ namespace InGameScene
             else
             {
                 RespawnRandomEnemy();
-            }
+            }*/
 
-/*            // 설정된 스테이지값을 넘는 하드코어 유저가 존재할 경우, 마지막 스테이지 정보로 계속 유지
-            if (_currentStageNum > StaticManager.Backend.Chart.Stage.List.Count)
+            // 설정된 스테이지값을 넘는 하드코어 유저가 존재할 경우, 마지막 스테이지 정보로 계속 유지
+/*            if (StaticManager.Backend.GameData.UserData.Level > StaticManager.Backend.Chart.Stage.List.Count)
+            {
+                RespawnRandomEnemy();
+                return;
+            }*/
+
+            if(StaticManager.Backend.GameData.UserData.Stage - 1 > StaticManager.Backend.Chart.Stage.List.Count)
             {
                 RespawnRandomEnemy();
                 return;
             }
 
             // 설정된 스테이지값을 넘는 하드코어 유저가 존재할 경우, 마지막 스테이지 정보로 계속 유지
-            if (StaticManager.Backend.GameData.UserData.Level > StaticManager.Backend.Chart.Stage.List[_currentStageNum].Level)
+            if (StaticManager.Backend.GameData.UserData.Level > StaticManager.Backend.Chart.Stage.List[StaticManager.Backend.GameData.UserData.Stage - 1].Level)
             {
-                _currentStageNum++;
+                StaticManager.Backend.GameData.UserData.UpdateStage(1);
                 GoNextStage();
             }
             else
             {
                 RespawnRandomEnemy();
-            }*/
+            }
         }
 
         //현재 스테이지의 EnemyInfoList에 있는 랜덤한 적을 불러와 생성하는 함수
@@ -265,10 +271,15 @@ namespace InGameScene
 
                     Managers.Game.UpdateUserData(moneyToAdd, enemyItem.Exp);
 
+                    if (enemyItem.isBoss)
+                    {
+                        _uiManager.EnemyUI.OnBossKillAnimation(enemyItem.Money, enemyItem.Exp);
+                    }
+
                     StaticManager.Backend.GameData.UserData.CountDefeatEnemy();
                     _uiManager.LeftUI.GetUI<InGameUI_Quest>().UpdateUI(BackendData.Chart.Quest.QuestType.DefeatEnemy);
                     _player.SetNewEnemy(null);
-                    if (enemyItem.isBoss)
+/*                    if (enemyItem.isBoss)
                     {
                         if (StaticManager.Backend.GameData.UserData.Stage >= StaticManager.Backend.Chart.Stage.List.Count)
                         {
@@ -281,15 +292,18 @@ namespace InGameScene
                             _uiManager.EnemyUI.ShowUI(false);
                         }
                     }
-                    else
-                    {
+                    else*/
+                    //{
+
                         _enemyDeafultCount++;
                         RespawnNextEnemy();
-                    }
-                    Debug.Log(StaticManager.Backend.GameData.UserData.Stage + "입니다");
+                    //}
+/*                    Debug.Log(StaticManager.Backend.GameData.UserData.Stage + "입니다");
                     Debug.Log(StaticManager.Backend.Chart.Stage.List.Count + "입니다2");
-                    Debug.Log(_enemyDeafultCount + "입니다3");
-                    //_uiManager.EnemyUI.ResetUI();
+                    Debug.Log(_enemyDeafultCount + "입니다3");*/
+//TODO : 보스몬스터는 다른 DeathSound를 내도록
+                    SoundManager.Instance.PlaySFX("Death");
+                    _uiManager.EnemyUI.ResetUI();
                     //_uiManager.EnemyUI.ShowBossUI(false);
                     //_uiManager.EnemyUI.ShowUI(false);
                     break;
@@ -316,6 +330,13 @@ namespace InGameScene
         public void AttackEffect(float damage)
         {
             _uiManager.EnemyUI.OnAttackAnimation(damage);
+        }
+
+        public void SpawnBossEnemy(BackendData.Chart.Boss.Item bossInfo)
+        {
+            Object.Destroy(_enemyItem.gameObject, 0f);
+            CreateBoss(bossInfo);
+            _uiManager.EnemyUI.OnBossAnimation();
         }
     }
 }

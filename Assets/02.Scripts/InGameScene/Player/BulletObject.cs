@@ -12,6 +12,7 @@ namespace InGameScene
         {
             // 파티클 시스템 컴포넌트 가져오기
             _particleSystem = this.gameObject.GetComponent<ParticleSystem>();
+            SoundManager.Instance.PlaySFX("Attack");
         }
 
         // 적에게 닿을 시 주는 데미지 지정

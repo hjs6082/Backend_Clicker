@@ -69,6 +69,7 @@ namespace InGameScene.UI
                     InGameScene.Managers.Game.UpdateUserData(reward, 0);
                     StaticManager.UI.AlertUI.OpenAlertUI("구매 완료", reward + "Gold" + "이(가) 지급되었습니다.");
                     UpdateUI();
+                    SoundManager.Instance.PlaySFX("Buy");
                     break;
                 case RewardType.gem:
                     // 다른 보상 처리 (예: 보석 추가)
@@ -93,6 +94,7 @@ namespace InGameScene.UI
         {
             InGameScene.Managers.Game.UpdateGem(gem);
             StaticManager.UI.AlertUI.OpenAlertUI("구매 완료", "Gem " + gem + "이(가) 지급되었습니다.");
+            SoundManager.Instance.PlaySFX("Buy");
             UpdateUI();
         }
     }

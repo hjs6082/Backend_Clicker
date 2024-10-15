@@ -18,6 +18,7 @@ namespace InGameScene.UI
         [SerializeField] private GameObject _enemyAttackEffectTextPrefab;
         [SerializeField] private Transform _enemyAttackEffectTransform;
         [SerializeField] private GameObject _bossEffectPrefab;
+        [SerializeField] private GameObject _bossKillEffectPrefab;
         [SerializeField] private Transform _bossEffectTransform;
         [SerializeField] private TMP_Text _bossText;
 
@@ -31,6 +32,7 @@ namespace InGameScene.UI
 
             _enemyAttackEffectTextPrefab = Resources.Load<GameObject>("Prefabs/AttackEffectObject");
             _bossEffectPrefab = Resources.Load<GameObject>("Prefabs/BossEffectPrefab");
+            _bossKillEffectPrefab = Resources.Load<GameObject>("Prefabs/BossKillEffectPrefab");
         }
 
         // 적 정보 갱신
@@ -50,7 +52,7 @@ namespace InGameScene.UI
         {
             _currentHp = currentHp;
 
-            _enemyHpText.text = string.Format("{0:0.##} / {1:0}", _currentHp, _maxHp);
+            _enemyHpText.text = string.Format("{0:0.##}K / {1:0}K", _currentHp, _maxHp);
             _enemyHpSlider.value = _currentHp;
         }
 
@@ -75,8 +77,7 @@ namespace InGameScene.UI
         public void ResetUI()
         {
             _enemyHpSlider.value = 0;
-            _enemyHpText.text = "0 / "+ _maxHp;
-
+            _enemyHpText.text = "0 / "+ _maxHp + "K";
         }
 
         public void OnAttackAnimation(float damage)
@@ -95,6 +96,14 @@ namespace InGameScene.UI
             attackEffectObj.transform.SetParent(_bossEffectTransform, false);
             attackEffectObj.transform.localPosition = Vector2.zero;
             //_bossEffectPrefab.GetComponent<BossEffect>().StartBossEffect();
+        }
+
+        public void OnBossKillAnimation(float money, float exp)
+        {
+            GameObject bossKillEffectObj = Instantiate(_bossKillEffectPrefab, _bossEffectTransform.position, Quaternion.identity);
+            bossKillEffectObj.transform.SetParent(_bossEffectTransform, false);
+            bossKillEffectObj.transform.localPosition = Vector2.zero;
+            bossKillEffectObj.GetComponent<BossKillEffect>().Init(money, exp);
         }
     }
 }

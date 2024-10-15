@@ -46,6 +46,7 @@ namespace InGameScene
             _buffEffectObject = Resources.Load<GameObject>("Prefabs/InGameScene/Buff/Buff_" + buffCase);
             GameObject buffObject = Instantiate(_buffEffectObject,buffEffectTransform);
             buffObject.GetComponent<ParticleSystem>().Play();
+            SoundManager.Instance.PlaySFX("Buff");
             _buffEffectObject = buffObject;
             return true;
         }

@@ -24,7 +24,7 @@ namespace InGameScene.UI
         {
             rankText.text = rankUserItem.rank;
             nickNameText.text = rankUserItem.nickname;
-            rankScoreText.text = "스코어 : " + rankUserItem.score;
+            rankScoreText.text = "레벨 : " + rankUserItem.score;
         }
     }
 }

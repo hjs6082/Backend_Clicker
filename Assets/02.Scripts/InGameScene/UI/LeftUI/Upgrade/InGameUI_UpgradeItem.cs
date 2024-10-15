@@ -89,6 +89,7 @@ namespace InGameScene.UI
                         Debug.Log("바꿀 아이디 : " + item2.MyWeaponId);
                         InGameScene.Managers.Game.UpdateWeaponEquip(item, item2.MyWeaponId);
                         StaticManager.UI.AlertUI.OpenAlertUI("착용 완료", _weaponInfo.WeaponName + "이(가) 착용되었습니다.");
+                        SoundManager.Instance.PlaySFX("Equip");
                         Equip();
                     }
                 }
