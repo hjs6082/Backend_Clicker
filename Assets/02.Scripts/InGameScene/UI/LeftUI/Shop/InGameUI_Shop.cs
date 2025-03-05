@@ -52,6 +52,7 @@ namespace InGameScene.UI
             }
 
             InGameScene.Managers.Game.UpdateGem(-price);
+            StaticManager.Backend.UpdateAllGameData(null);
             AddReward(rewardType, reward);
             UpdateUI();
 

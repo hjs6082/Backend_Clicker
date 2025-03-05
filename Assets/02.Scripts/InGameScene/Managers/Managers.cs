@@ -30,6 +30,7 @@ namespace InGameScene
         private readonly UIManager _uiManager = new();
 
         public static BuffManager Buff;
+        public static ProbabilityManager Probability;
 
         private Player _player;
         //private CloudManager _cloudManager;
@@ -63,6 +64,9 @@ namespace InGameScene
                 Game.Init(_player, _uiManager);
 
                 Process.Init(_player, _uiManager);
+                
+                Probability = FindAnyObjectByType<ProbabilityManager>();
+                Probability.Init();
 
                 //var buffObject = new GameObject();
                 //buffObject.transform.SetParent(this.transform);

@@ -59,6 +59,7 @@ public class LoadingSceneManager : MonoBehaviour
         //_initializeStep.Enqueue(() => { ShowDataName("상점 정보"); StaticManager.Backend.Chart.Shop.BackendChartDataLoad(NextStep); });
         _initializeStep.Enqueue(() => { ShowDataName("퀘스트 정보"); StaticManager.Backend.Chart.Quest.BackendChartDataLoad(NextStep); });
         _initializeStep.Enqueue(() => { ShowDataName("보스 정보"); StaticManager.Backend.Chart.Boss.BackendChartDataLoad(NextStep); });
+        _initializeStep.Enqueue(() => { ShowDataName("스킬 정보"); StaticManager.Backend.Chart.Skill.BackendChartDataLoad(NextStep); });
 
         // 랭킹 정보 불러오기 함수 Insert
         _initializeStep.Enqueue(() => { ShowDataName("랭킹 정보 불러오기"); StaticManager.Backend.Rank.BackendLoad(NextStep); });

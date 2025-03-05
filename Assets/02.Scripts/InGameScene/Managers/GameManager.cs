@@ -101,6 +101,23 @@ namespace InGameScene
             }
         }
 
+        // PlayerIcon과 관련된 UserData를 변경하는 함수
+        public void UpdateSkillIndex(int skillIndex)
+        {
+            try
+            {
+                StaticManager.Backend.GameData.UserData.UpdateSkillIndex(skillIndex);
+
+                // 변경된 데이터에 맞게 UserUI 변경(우측 상단)
+                _uiManager.UserUI.UpdateUI();
+                //TODO Skill UI도 추가
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"UpdateSkillIndex({skillIndex}}}) 중 에러가 발생하였습니다\n{e}");
+            }
+        }
+
         // 아이템 인벤토리 관련 데이터와 UI를 업데이트하는 함수
         public void UpdateItemInventory(int itemID, int count)
         {

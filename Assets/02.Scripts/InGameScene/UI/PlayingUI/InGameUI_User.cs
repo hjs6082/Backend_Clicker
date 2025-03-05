@@ -20,6 +20,7 @@ namespace InGameScene.UI
         [SerializeField] private TMP_Text _levelText;
         [SerializeField] private TMP_Text _moneyText;
         [SerializeField] private TMP_Text _gemText;
+        [SerializeField] private InGameUI_Skill _playerSkill;
 
         public void Init()
         {
@@ -50,6 +51,9 @@ namespace InGameScene.UI
             {
                 _playerIcon.sprite = Resources.Load<Sprite>("Images/PlayerIcon/Icon_" + playerIcon);
             }
+
+            if(StaticManager.Backend.GameData.UserData.SkillIndex != 0)
+                _playerSkill.SetSkill(StaticManager.Backend.GameData.UserData.SkillIndex);
 
             //_playerIcon.sprite = Resources.Load<Sprite>("Images/PlayerIcon/Icon_" + StaticManager.Backend.GameData.UserData.PlayerIcon);
         }

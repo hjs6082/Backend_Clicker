@@ -94,6 +94,14 @@ namespace InGameScene
                     isSuccess = Managers.Buff.StartBuff(Buff.BuffStatType.Gold, multi, time,
                         Buff.BuffAdditionType.Multi);
                 }
+                else if(item.ItemType.Equals("Box"))
+                {
+                    isSuccess = true;
+                }
+                else if(item.ItemType.Equals("Key"))
+                {
+                    isSuccess = true;
+                }
                 else
                 {
                     throw new Exception("등록되지 않은 아이템을 사용하였습니다.");

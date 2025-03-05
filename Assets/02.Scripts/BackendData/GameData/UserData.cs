@@ -19,6 +19,7 @@ namespace BackendData.GameData
         public float Money { get; private set; }
         public int Gem { get; private set; }
         public int PlayerIcon { get; private set; }
+        public int SkillIndex { get; private set; }
         public string LastLoginTime { get; private set; }
 
         public float Exp { get; private set; }
@@ -65,6 +66,7 @@ namespace BackendData.GameData
             Money = float.Parse(gameDataJson["Money"].ToString());
             Gem = int.Parse(gameDataJson["Gem"].ToString());
             PlayerIcon = int.Parse(gameDataJson["PlayerIcon"].ToString());
+            SkillIndex = int.Parse(gameDataJson["SkillIndex"].ToString());
             LastLoginTime = gameDataJson["LastLoginTime"].ToString();
 
             DayUsingGold = float.Parse(gameDataJson["DayUsingGold"].ToString());
@@ -102,6 +104,7 @@ namespace BackendData.GameData
             param.Add("Money", Money);
             param.Add("Gem", Gem);
             param.Add("PlayerIcon", PlayerIcon);
+            param.Add("SkillIndex", SkillIndex);
             param.Add("Exp", Exp);
             param.Add("MaxExp", MaxExp);
             param.Add("LastLoginTime", string.Format("{0:MM-DD:HH:mm:ss.fffZ}", DateTime.Now.ToString(CultureInfo.InvariantCulture)));
@@ -174,6 +177,12 @@ namespace BackendData.GameData
             IsChangedData = true;
 
             PlayerIcon = playerIconNum;
+        }
+
+        public void UpdateSkillIndex(int skillIndex)
+        {
+            IsChangedData = true;
+            SkillIndex = skillIndex;
         }
 
 

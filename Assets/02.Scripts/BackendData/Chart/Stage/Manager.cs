@@ -7,11 +7,10 @@ using Unity.VisualScripting;
 namespace BackendData.Chart.Stage
 {
     //===============================================================
-    // Weapon 차트의 데이터를 관리하는 클래스
+    // Stage 차트의 데이터를 관리하는 클래스
     //===============================================================
     public class Manager : Base.Chart
     {
-
         readonly List<Item> _list = new();
         public IReadOnlyList<Item> List => (IReadOnlyList<Item>)_list.AsReadOnlyList();
 
@@ -34,3 +33,5 @@ namespace BackendData.Chart.Stage
         }
     }
 }
+
+

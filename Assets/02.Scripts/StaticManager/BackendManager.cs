@@ -30,6 +30,7 @@ public class BackendManager : MonoBehaviour {
         public readonly BackendData.Chart.Item.Manager Item = new(); // 아이템 차트
         //public readonly BackendData.Chart.Shop.Manager Shop = new(); // 샵 차트
         public readonly BackendData.Chart.Boss.Manager Boss = new();
+        public readonly BackendData.Chart.Skill.Manager Skill = new();
     }
 
     // 게임 정보 관리 데이터만 모아놓은 클래스
@@ -84,9 +85,10 @@ public class BackendManager : MonoBehaviour {
             Backend.ErrorHandler.Poll();
         }*/
 
-        if(Input.GetKeyDown(KeyCode.P))
+        if(Input.GetKeyDown(KeyCode.K))
         {
-            UpdateAllGameData(null);
+            InGameScene.Managers.Game.UpdateItemInventory(4, 1);
+            InGameScene.Managers.Game.UpdateItemInventory(5, 1);
         }
     }
 

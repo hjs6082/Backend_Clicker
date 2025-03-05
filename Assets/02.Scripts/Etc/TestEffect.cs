@@ -20,6 +20,6 @@ public class TestEffect : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        Debug.Log($"Effect : {other.name}");
+        Debug.Log($"Particle collided with enemy: {other.name}, dealt damage.");
     }
 }
